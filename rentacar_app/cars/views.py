@@ -112,3 +112,6 @@ def update_view(request, cars_id):
                    'form':form
                    })
 
+
+def lalal(request):
+    pass
