@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block title %}{% endblock %}
+{% block content %}
+  <center>
+   {% if query %}
+      <h1>Szukana wartosć : {{query}}</h1>
+    <br/>
+    {% for car in query_base %}
+        <a href="{% url 'cars_detail' car.id %}">{{ car }} - {{ car.model }} - {{ car.year_of_production }}</a>
+    <br/>
+    {% endfor %}'
+
+    {% else %}
+       <h1> Nic nie zostało podane </h1>
+    {% endif %}
+
+  </center>
+{% endblock %}
+
+

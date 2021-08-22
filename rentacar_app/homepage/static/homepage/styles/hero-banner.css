@@ -1,0 +1,37 @@
+
+.hero-banner {
+    background-image: url(/static/homepage/images/hero-bg.jpg);
+    height: 90vh;
+    background-size: cover;
+    paddind-top: 8vh;
+    padding-bottom: 40vh;
+    background-position: fixed;
+    background-repeat: no-repeat;
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+
+
+
+
+.parallax {
+  /* The image used */
+  background-image: url(/static/homepage/images/hero-bg.jpg);
+
+  /* Set a specific height */
+  min-height: 90vh  ;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

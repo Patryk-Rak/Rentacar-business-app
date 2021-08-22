@@ -1,0 +1,7 @@
+
+
+
+Do ogarnięcia w user_account:
+
+- w views.py naprawić redirecta 'return redirect("http://127.0.0.1:8000/")' żeby szło na homepage po zalogowaniu
+- w modelu Account zrobić tak żeby first i last name mógł być null żeby po zrobieniu superuser nie musieć dodawać mu imienia

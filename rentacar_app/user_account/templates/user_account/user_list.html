@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lista samochodów</h1>
+<div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">last_login</th>
+          <th scope="col">email</th>
+          <th scope="col">is_active</th>
+          <th scope="col">date_joined</th>
+          <th scope="col">Opcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+            <tr>
+              <th scope="row">{{ user.id }}</th>
+              <td>{{ user.last_login }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.is_active }}</td>
+              <td>{{ user.date_joined }}</td>
+                <td> <a href="{% url 'user-delete' user.id %}">usuń</a> </td>
+        {% endfor %}
+
+            </tr>
+      </tbody>
+    </table>
+</div>
+
+<center>
+    <br/><br/>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Poprzednia</a>
+    {% endif %}
+    Strona {{ page_obj.number }}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Następna</a>
+    {% endif %}
+</center>
+
+{% endblock %}
+

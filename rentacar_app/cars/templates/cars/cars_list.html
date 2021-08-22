@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lista samochodów</h1>
+<div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Model Samochodu</th>
+          <th scope="col">Koszt wynajmu</th>
+          <th scope="col">Szczegóły</th>
+          <th scope="col">Status new/old</th>
+          <th scope="col">Wyprzedaż</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for car in cars %}
+            <tr>
+              <th scope="row">{{ car.id }}</th>
+              <td>{{ car.model }}</td>
+              <td>{{ car.daily_rental_cost }}</td>
+              <td><a href="{% url 'cars_detail' car.id %}">Otwórz</a></td>
+              <td>test  :  <h1>{{car.is_new_or_old}}</h1></td>
+              <td>test  :  <h1>{{car.saturday_sales}}</h1></td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<center>
+    <br/><br/>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Poprzednia</a>
+    {% endif %}
+    Strona {{ page_obj.number }}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Następna</a>
+    {% endif %}
+</center>
+{% endblock %}

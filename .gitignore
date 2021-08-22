@@ -1,8 +1,14 @@
+.idea
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pyc
+rentacar_app/rentacar_app/__pycache__/*
+rentacar_app/cars/migrations/__pycache__/
+rentacar_app/homepage/__pycache__/
+**/__pycache__
 # C extensions
 *.so
 
@@ -127,3 +133,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+
+<center>
+    <form action="" method="get">
+      <div class="form-row">
+        <div class="col">
+          <input type="submit" value="Szukaj"  class="form-control" {{ filterset.form }} />
+        </div>
+      </div>
+    </form>
+</center>
+
+<!--<div class="container">-->
+<!--    <table class="table table-striped">-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th scope="col">#</th>-->
+<!--          <th scope="col">Model Samochodu</th>-->
+<!--          <th scope="col">Koszt wynajmu</th>-->
+<!--          <th scope="col">Szczegóły</th>-->
+<!--          <th scope="col">Status new/old</th>-->
+<!--          <th scope="col">Wyprzedaż</th>-->
+<!--          <th scope="col">wyporzyczony?</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        {% for car in cars %}-->
+<!--            <tr>-->
+<!--              <th scope="row">{{ car.id }}</th>-->
+<!--              <td>{{ car.model }}</td>-->
+<!--              <td>{{ car.daily_rental_cost }}</td>-->
+<!--              <td><a href="{% url 'cars_detail' car.id %}">Otwórz</a></td>-->
+<!--              <td>test  :  <h1>{{car.is_new_or_old}}</h1></td>-->
+<!--              <td>test  :  <h1>{{car.saturday_sales}}</h1></td>-->
+<!--              <td>test  :  <h1>{{car.car_is_rented}}</h1></td>-->
+<!--            </tr>-->
+<!--        {% endfor %}-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+            {% for car in cars %}
+            <div class="row p-2 bg-white border rounded">
+                <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="https://i.pinimg.com/originals/ab/17/0f/ab170fc62f73593201c06d9601ef1b13.jpg"></div>
+                <div class="col-md-6 mt-1">
+                    <h5>{{ car.model }}</h5>
+                    <div class="d-flex flex-row">
+                        <span>{{ car.id }}</span>
+                    </div>
+                    <div class="mt-1 mb-1 spec-1"><span>Moc Silnika: {{car.car_engine_power}} KM </span><span class="dot"></span>
+                  <span>Rok: {{car.year_of_production}} </span><span class="dot"></span><span>Typ Silnika: {{car.type_of_car_engine}} </span><span class="dot"></span><br>
+                  <span>Liczba osób: {{car.num_of_passengers}}</span><span class="dot"></span><span>klimatyzacja: {{car.air_conditioner}}<br></span>
+               </div>
+                    <p class="text-justify text-truncate para mb-0">{{ car.note }}<br><br></p>
+                </div>
+                <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="mr-1">{{ car.daily_rental_cost }}</h4>
+                  <span class="strike-text">$200.99</span>
+                    </div>
+                    <h6 class="text-success">Dostępny</h6>
+                    <div class="d-flex flex-column mt-4"><button class="btn btn-danger btn-sm" type="button">Czytaj więcej</button>
+                        <button class="btn btn-outline-danger btn-sm mt-2" type="button">
+                        <a href="{% url 'car-reservation' car.id %}">Zarezerwuj</a>
+                    </button>
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                            <button class="btn btn-outline-danger btn-sm mt-2" type="button">
+                            <a href="{% url 'car-update' car.id %}">Edytuj</a>
+                        {% endif %}
+                    </button>
+                    </div>
+                </div>
+            </div>
+         {% endfor %}
+        </div>
+    </div>
+</div>
+<div>
+
+</div>
+
+<center>
+    <br/><br/>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Poprzednia</a>
+    {% endif %}
+    Strona {{ page_obj.number }}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Następna</a>
+    {% endif %}
+</center>
+
+{% endblock %}

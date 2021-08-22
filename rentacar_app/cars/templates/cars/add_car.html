@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <center>
+        <h1>Add car To Database</h1>
+        <br/><br/>
+        {% if submitted %}
+            Dodałeś samochód do bazy danych
+        {% else %}
+        <form action=" " method="POST">
+
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit" class="btn btn-sucess">
+
+        </form>
+        {% endif %}
+
+    </center>
+{% endblock %}

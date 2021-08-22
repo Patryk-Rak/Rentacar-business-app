@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<center>
+    <h1>Zaloguj</h1>
+    <p>Zalogowany jako {{auth_user.username}}</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ login_form }}
+        {% if request.GET.next %}
+         <input type="hidden" name="next" value="{{request.GET.next}}">
+        {% endif %}
+        <input type="submit" value="zaloguj">
+    </form>
+</center>
+{% endblock %}
