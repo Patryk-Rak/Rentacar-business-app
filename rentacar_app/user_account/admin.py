@@ -12,7 +12,21 @@ class AccountAdmin(UserAdmin):
 
     filter_horizontal = ()
     list_filter = ()
-    fieldsets = ()
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'date_joined', 'last_login')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_admin', 'is_superuser')}),
+        )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2', 'first_name', 'last_name',
+                       'is_active', 'is_staff', 'is_admin', 'is_superuser'),
+        }),
+
+    )
+
 
 
 admin.site.register(Account, AccountAdmin)

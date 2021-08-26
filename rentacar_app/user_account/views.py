@@ -1,8 +1,8 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-
 from django.http import HttpResponse
-
 from .forms import AccountRegistrationForm, ClientProfileForm
 from .models import Account
 
@@ -38,7 +38,27 @@ def register_view(request, *args, **kwargs):
 # def login_view(request, *args, **kwargs):
 
 
+# class UserListView(ListView):
+#     template_name = "user_account/user_list.html"
+#     model = Account
+#     context_object_name = 'users'
+#     paginate_by = 5
 
+# def user_list(request):
+#     pg = Paginator(Account.objects.all().order_by('id'), 2)
+#     page_number = request.GET.get('page')
+#     try:
+#         users = pg.page(page_number)
+#     except EmptyPage:
+#         users = pg.page(pg.num_pages)
+#     except PageNotAnInteger:
+#         users = pg.page(1)
+#     return render(request, 'user_account/user_list.html', {'users': users})
+#
+# def delete_user_view(request, user_id):
+#     user = Account.objects.get(pk=user_id)
+#     user.delete()
+#     return redirect('name_user_list_view')
 
 
 
@@ -95,25 +115,3 @@ def register_view(request, *args, **kwargs):
 #     return render(request, 'user_account/change_password.html', {'change_password_form': form})
 #
 #
-# class UserListView(ListView):
-#     template_name = "user_account/user_list.html"
-#     model = Account
-#     context_object_name = 'users'
-#     paginate_by = 5
-#
-#
-# def user_list(request):
-#     pg = Paginator(Account.objects.all().order_by('id'), 2)
-#     page_number = request.GET.get('page')
-#     try:
-#         users = pg.page(page_number)
-#     except EmptyPage:
-#         users = pg.page(pg.num_pages)
-#     except PageNotAnInteger:
-#         users = pg.page(1)
-#     return render(request, 'user_account/user_list.html', {'users': users})
-#
-# def delete_user_view(request, user_id):
-#     user = Account.objects.get(pk=user_id)
-#     user.delete()
-#     return redirect('name_user_list_view')
