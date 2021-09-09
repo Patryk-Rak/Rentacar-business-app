@@ -1,5 +1,5 @@
 from django.conf import settings #TODO: ADD THIS LINE.
-from user_account.forms import RegistrationForm, AccountAuthenticationForm
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
