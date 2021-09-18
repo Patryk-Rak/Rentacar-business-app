@@ -1,5 +1,5 @@
 <nav class="navbar fixed-top py-3 navbar-expand-lg navbar-light bg-light shadow-sm">
-     <div class="container">
+     <div class="container-fluid" style="padding-right: 200px; padding-left:200px;">
       <a class="navbar-brand" href="#">
          RENTACAR<img src="/static/images/logo.png" width="130" alt="">
       </a>
@@ -14,12 +14,6 @@
          </li>
          <li class="nav-item">
            <a class="nav-link active" href="http://127.0.0.1:8000/cars">Auta</a>
-         </li>
-         <li class="nav-item">
-           <a class="nav-link" href="#">Okazje</a>
-         </li>
-         <li class="nav-item">
-           <a class="nav-link" href="#">Kultowe Auta</a>
          </li>
          <li class="nav-item dropdown">
            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,26 +30,39 @@
            <a class="nav-link" href="http://127.0.0.1:8000/user_contact/contact/">Kontakt</a>
          </li>
 
-         <li class="nav-item">
-            <form class="form-inline my-2 my-lg-0"  method="post" action="{% url 'search-car' %}">
+         <li class="nav-item" style="padding-top:7px; padding-bottom:7px;">
+            <form class="form-inline my-0 my-lg-0"  method="post" action="{% url 'search-car' %}">
 			    {% csrf_token %}
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="car_search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="car_search" style="width: 100px;">
             </form>
         </li>
-
+         <li class="nav-item" style="flex-direction: row;">
         {% if user.is_authenticated %}
-          Hi sir {{ user.id }}!
-          <p><a href="{% url 'logout' %}">Log out</a></p>|
+             <div class="row">
+                 <div class="col-sm">
+                     <p>Wyloguj się</p>
+                 </div>
+                 <div class="col-sm">
+          <p><a href="{% url 'logout' %}"><span class="material-icons">logout</span></a></p>
+                 </div>
         {% else %}
-          <p>You are not logged in</p>
-          <a href="{% url 'login' %}">Log In</a> |
-          <a href="{% url 'register' %}">Sign Up</a>
+             <div class="row">
+                <div class="col-sm">
+                  <p>Zaloguj się</p>
+                </div>
+                <div class="col-sm">
+                  <a href="{% url 'login' %}"><span class="material-icons">login</span></a>
+                </div>
+             </div>
         {% endif %}
+         </li>
 
 			</li>
         </ul>
       </div>
       </div>
      </div>
+
 </nav>
+
+<!--<div style="margin:108px; opacity:0;"></div>-->

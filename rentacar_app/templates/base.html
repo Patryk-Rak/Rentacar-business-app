@@ -19,8 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- reguluje rozdzielczość dla urządzeń mobilnych-->
 <!--   dodaje ikonki-->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -35,6 +34,7 @@
 	.main{
 		min-height: 100vh;
 		height: 100%;
+        margin-top: 96px ;
 	}
 </style>
 <div class="main">
@@ -50,20 +50,11 @@
 <script src="{% static 'boostrap/js/jquery.min.js' %}"></script>
 <script src="{% static 'boostrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
-<script>
-$(window).on("scroll", function () {
-    if ($(window).scrollTop()) {
-        $('.navbar').addClass('half-white-on-scroll');
-    } else {
-        $('.navbar').removeClass('half-white-on-scroll');
-    }
-});
-
-$(window).scroll(function(){
-$('navbar').toggleClass('scrolled', $(this).scrollTop() > 100);
-});
-</script>
 <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+
 </body>
 
 

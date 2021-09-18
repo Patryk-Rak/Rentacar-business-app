@@ -1,6 +1,70 @@
 {% extends "base.html" %}
 {% block content %}
 
+  <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+ <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+
+        <div class="carousel-item active"
+        style="background-image:url(/static/images/car.jpg); background-size:cover;">
+
+          <div class ="container">
+                <center>
+                <h1>TEST 1</h1>
+                <p>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsum</p>
+                <a href="#" class="btn btn-lg btn-primary">rezerwuj</a>
+              </center>
+          </div>
+        </div>
+
+        <div class="carousel-item"
+        style="background-image:url(/static/images/car.jpg); background-size:cover;">
+
+          <div class ="container">
+                <center>
+                <h1>TEST 2</h1>
+                <p>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsum</p>
+                <a href="#" class="btn btn-lg btn-primary">doweidz się więcej</a>
+              </center>
+          </div>
+        </div>
+
+       <div class="carousel-item"
+       style="background-image:url(/static/images/car.jpg); background-size:cover;">
+
+          <div class ="container">
+                <center>
+                <h1>TEST 3</h1>
+                <p>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsum</p>
+                <a href="#" class="btn btn-lg btn-primary">sprawdz inne oferty</a>
+              </center>
+          </div>
+        </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
 <center>
     <form action="" method="get">
       <div class="form-row">
@@ -11,34 +75,6 @@
     </form>
 </center>
 
-<!--<div class="container">-->
-<!--    <table class="table table-striped">-->
-<!--      <thead>-->
-<!--        <tr>-->
-<!--          <th scope="col">#</th>-->
-<!--          <th scope="col">Model Samochodu</th>-->
-<!--          <th scope="col">Koszt wynajmu</th>-->
-<!--          <th scope="col">Szczegóły</th>-->
-<!--          <th scope="col">Status new/old</th>-->
-<!--          <th scope="col">Wyprzedaż</th>-->
-<!--          <th scope="col">wyporzyczony?</th>-->
-<!--        </tr>-->
-<!--      </thead>-->
-<!--      <tbody>-->
-<!--        {% for car in cars %}-->
-<!--            <tr>-->
-<!--              <th scope="row">{{ car.id }}</th>-->
-<!--              <td>{{ car.model }}</td>-->
-<!--              <td>{{ car.daily_rental_cost }}</td>-->
-<!--              <td><a href="{% url 'cars_detail' car.id %}">Otwórz</a></td>-->
-<!--              <td>test  :  <h1>{{car.is_new_or_old}}</h1></td>-->
-<!--              <td>test  :  <h1>{{car.saturday_sales}}</h1></td>-->
-<!--              <td>test  :  <h1>{{car.car_is_rented}}</h1></td>-->
-<!--            </tr>-->
-<!--        {% endfor %}-->
-<!--      </tbody>-->
-<!--    </table>-->
-<!--</div>-->
 
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
