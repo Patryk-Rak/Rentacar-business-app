@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import Cars
-from .forms import CarsForm
+from .forms import CarsForm, OrderForm
 from .filters import CarFilter
 
 # Create your views here.
@@ -112,3 +112,6 @@ def update_view(request, cars_id):
                    'form':form
                    })
 
+def rental_view(request):
+    form = OrderForm
+    return render(request, 'cars/cars_detail.html', {'form':form})

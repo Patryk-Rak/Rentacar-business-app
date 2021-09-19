@@ -2,6 +2,9 @@ from django.db import models
 from django.shortcuts import reverse
 import datetime
 from facilities.models import Facility
+from user_account.models import Account
+import datetime
+
 
 
 import sys
@@ -64,3 +67,22 @@ class Cars(models.Model):
     def get_url(self):
         return reverse('cars_detail',
                         args = (self.id))
+
+
+class Order(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    approved = models.BooleanField(default=False)
+    finished = models.BooleanField(default=False)
+    canceled = models.BooleanField(default=False)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    car = models.ForeignKey(Cars, on_delete=models.CASCADE)
+
+
+    # def car_rental_price(self):
+    #     from datetime import datetime
+    #     datetime_object_I = datetime.strptime(self.start_date, '%d/%m/%y %')
+    #     datetime_object_II = datetime.strptime(self.end_date, '%d/%m/%y %')
+    #     days = datetime_object_II - datetime_object_I
+
+
