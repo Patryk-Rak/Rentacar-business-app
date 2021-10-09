@@ -53,7 +53,7 @@
                     </div>
                     <div class="mt-1 mb-1 spec-1"><span>Moc Silnika: {{car.car_engine_power}} KM </span><span class="dot"></span>
                   <span>Rok: {{car.year_of_production}} </span><span class="dot"></span><span>Typ Silnika: {{car.type_of_car_engine}} </span><span class="dot"></span><br>
-                  <span>Liczba osób: {{car.num_of_passengers}}</span><span class="dot"></span><span>klimatyzacja: {{car.air_conditioner}}<br></span>
+                  <span>Liczba osób: {{car.num_of_passengers}}</span><span class="dot"></span><span>klimatyzacja: {{car.air_conditioner}}<br></span><span>Miejsce: {{car.facility_allocation}}</span><br/>
                </div>
                     <p class="text-justify text-truncate para mb-0">{{ car.note }}<br><br></p>
                 </div>
@@ -62,7 +62,7 @@
                         <h4 class="mr-1">{{ car.daily_rental_cost }}</h4>
                   <span class="strike-text">$200.99</span>
                     </div>
-                    <h6 class="text-success">Dostępny</h6>
+                    <h6 class="text-success">{{ car.car_is_rented }}</h6>
                     <div class="d-flex flex-column mt-4"><button class="btn btn-danger btn-sm" type="button">Czytaj więcej</button>
                         <button class="btn btn-outline-danger btn-sm mt-2" type="button">
                         <a href="{% url 'car-reservation' car.id %}">Zarezerwuj</a>

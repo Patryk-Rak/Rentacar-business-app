@@ -22,16 +22,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
-
+DEBUG = config('DEBUG', default=False, cast=bool)
+# EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+# EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+EMAIL_BACKEND = config("EMAIL_BACKEND")
+SENDGRID_API_KEY = config("SENDGRID_API_KEY")
 
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
 # Application definition
 
 INSTALLED_APPS = [
+    # 'calendarium'
     'user_account',
     'homepage',
     'cars',
@@ -44,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'event',
 
 ]
 

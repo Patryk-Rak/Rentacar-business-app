@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
+
 from .models import Cars
 from .forms import CarsForm
 from .filters import CarFilter
@@ -89,12 +90,16 @@ def search_car(request):
 @login_required(login_url="/user_account/login/")
 def get_reservation_view(request, cars_id):
     car = Cars.objects.get(pk=cars_id)
-    if car.car_is_rented == False:
-        car.car_is_rented = True
+    if car.car_is_rented == 'Dostepny':
+        car.car_is_rented = 'Zarezerwowany'
         car.save()
-        return render(request, "cars/cars_status.html", {'car': car})
+        return render(request, "cars/reservation.html", {'car': car})
     else:
-        return render(request, "cars/cars_status.html", {'car': car})
+        return render(request, "cars/reservation.html", {'car': car})
+
+
+
+
 
 # def update_view(request, cars_id ):
 #     car = Cars.objects.get(pk=cars_id)

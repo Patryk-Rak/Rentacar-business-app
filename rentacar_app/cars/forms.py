@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from .models import Cars
 
+
 #Create a Cars form
 class CarsForm(ModelForm):
     class Meta:

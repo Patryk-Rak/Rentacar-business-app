@@ -2,6 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 import datetime
 from facilities.models import Facility
+from event.models import Event
 
 
 import sys
@@ -19,6 +20,13 @@ class Cars(models.Model):
         ('E', 'Elektryk'),
         ('H', 'Hybryda'),
     )
+
+    AVAILABLE = (
+        ("Dostepny", "Dostepny"),
+        ("Zarezerwowany", "Zarezerwowany"),
+    )
+
+
     id = models.AutoField(primary_key=True, null=False, blank=False)
     mark = models.CharField(max_length=100, null=False, blank=False)
     model = models.CharField(max_length=100, null=False, blank=False)
@@ -37,7 +45,7 @@ class Cars(models.Model):
                                             on_delete=models.SET_NULL,
                                             blank=True,
                                             null=True,)
-    car_is_rented = models.BooleanField(default=False, null=False, blank=False)
+    car_is_rented = models.CharField(max_length=20, choices=AVAILABLE, blank=False)
 
     class Meta:
         verbose_name = "Car"
@@ -64,3 +72,4 @@ class Cars(models.Model):
     def get_url(self):
         return reverse('cars_detail',
                         args = (self.id))
+
