@@ -1,11 +1,11 @@
-from django.conf import settings #TODO: ADD THIS LINE.
+from django.conf import settings
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
-from .forms import AccountRegistrationForm, ClientProfileForm
+from .forms import AccountRegistrationForm, AccountAuthenticationForm
 from .models import Account
 
 
@@ -29,40 +29,51 @@ def register_view(request, *args, **kwargs):
             return redirect("http://127.0.0.1:8000/")
         else:
             context['registration_form'] = form
-
-
     return render(request, 'user_account/register.html', context)
 
-# def logout_view(request, *args, **kwargs):
-#     logout(request)
-#     return redirect("http://127.0.0.1:8000/")
-#
-# def login_view(request, *args, **kwargs):
+
+def logout_view(request, *args, **kwargs):
+    logout(request)
+    return redirect("http://127.0.0.1:8000/")
+
+def get_redirect_if_exists(request):
+    redirect = None
+    if request.GET:
+        if request.GET.get("next"):
+            redirect = str(request.GET.get("next"))
+    return redirect
 
 
-# class UserListView(ListView):
-#     template_name = "user_account/user_list.html"
-#     model = Account
-#     context_object_name = 'users'
-#     paginate_by = 5
+def login_view(request, *args, **kwargs):
+    context = {}
 
-# def user_list(request):
-#     pg = Paginator(Account.objects.all().order_by('id'), 2)
-#     page_number = request.GET.get('page')
-#     try:
-#         users = pg.page(page_number)
-#     except EmptyPage:
-#         users = pg.page(pg.num_pages)
-#     except PageNotAnInteger:
-#         users = pg.page(1)
-#     return render(request, 'user_account/user_list.html', {'users': users})
-#
-# def delete_user_view(request, user_id):
-#     user = Account.objects.get(pk=user_id)
-#     user.delete()
-#     return redirect('name_user_list_view')
+    user = request.user
+    if user.is_authenticated:
+        return redirect("http://127.0.0.1:8000/")
 
-# TODO: ADD THIS METHOD.
+    destination = get_redirect_if_exists(request)
+    print("destination: " + str(destination))
+
+    if request.POST:
+        form = AccountAuthenticationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(email=email, password=password)
+
+            if user:
+                login(request, user)
+                if destination:
+                    return redirect(destination)
+                return redirect("http://127.0.0.1:8000/")
+
+    else:
+        form = AccountAuthenticationForm()
+
+    context['login_form'] = form
+
+    return render(request, "user_account/login.html", context)
+
 
 def account_view(request, *args, **kwargs):
     """
@@ -81,9 +92,7 @@ def account_view(request, *args, **kwargs):
         return HttpResponse("Something went wrong.")
     if account:
         context['id'] = account.id
-        context['username'] = account.username
         context['email'] = account.email
-        context['profile_image'] = account.profile_image.url
         context['hide_email'] = account.hide_email
 
         # Define template variables
@@ -99,42 +108,4 @@ def account_view(request, *args, **kwargs):
         context['is_self'] = is_self
         context['is_friend'] = is_friend
         context['BASE_URL'] = settings.BASE_URL
-        return render(request, "account/account.html", context)
-
-# class SignUpView(CreateView):
-#     form_class = AccountRegistrationForm
-#     success_url = reverse_lazy('login')
-#     template_name = 'user_account/signup.html'
-#
-# def register(request):
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(data=request.POST)
-#         profile_form = ClientProfileForm(data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             profile_form.save()
-#             return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#         else:
-#             messages.error(request, "źle wprowadzone dane.")
-#     else:
-#         form = PasswordChangeForm(request.user)
-#         profile_form = ClientProfileForm(request.user)
-#         context = {'form' : form, 'profile_form' : profile_form}
-#     return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#
-#
-# def password_change_view(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(user=request.user, data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user)
-#             messages.success(request, 'Twoje hasło zostało zmienione :)!')
-#             return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#         else:
-#             messages.error(request, "źle wprowadzone dane.")
-#     else:
-#         form = PasswordChangeForm(request.user)
-#     return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#
-#
+        return render(request, "user_account/details.html", context)

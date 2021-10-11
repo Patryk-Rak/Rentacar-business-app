@@ -37,7 +37,7 @@
             </form>
         </li>
         {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="#"><span class="material-icons">account_circle</span> Profil</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'account:view' user_id=request.user.id %}"><span class="material-icons">account_circle</span> Profil</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span class="material-icons">logout</span> Wyloguj</a>
             </li>
         {% else %}
