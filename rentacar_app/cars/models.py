@@ -2,7 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 import datetime
 from facilities.models import Facility
-
+from datetime import timedelta
 
 import sys
 for x in sys.path:
@@ -64,3 +64,20 @@ class Cars(models.Model):
     def get_url(self):
         return reverse('cars_detail',
                         args = (self.id))
+
+
+class CarsReservationHistory(models.Model):
+    car = models.ForeignKey(Cars, on_delete=models.CASCADE)
+    # event_created = models.DateTimeField(auto_now_add=True)
+    # event_created = models.DateTimeField(auto_now_add=True)
+    # day_started = models.DateTimeField()
+    # day_ended = models.DateTimeField()
+    day1 = models.DateField()
+    day2 = models.DateField()
+
+    def __int__(self):
+        return self.car
+
+    def reservationtime(self):
+        value = CarsReservationHistory.day1 - CarsReservationHistory.day2
+        return value.days

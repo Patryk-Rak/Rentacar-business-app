@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+  <center>
+    <h1>Potwierdz rezerwacje</h1>
+      Edytujesz : {{ car }}
+    <form action=" "  method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+
+        marka :  {{ car.mark }} <br/>
+        model :  {{ car.model }} <br/>
+        kolor :  {{ car.color }} <br/>
+        koszt :  {{ car.daily_rental_cost }} <br/>
+        rok produkcji : {{ car.year_of_production }} <br/>
+        status : {{ car.car_is_rented }} <br/>
+        lokalizacja : {{ car.facility_allocation }} <br/>
+
+        <a href="{% url 'reservation-confirmed' car.id %}">Potwierdz</a>
+
+    </form>
+
+
+
+
+
+<!--            {% csrf_token %}-->
+<!--            {{ form.as_p }}-->
+
+<!--            <label for="day_started">  Dzien startu: </label></br>-->
+<!--            <input type="datetime-local" id="day_started" name="day_started" value=" day_started ">-->
+
+<!--        <label for="day_ended">  Dzien zakonczenia: </label></br>-->
+<!--            <input type="datetime-local" id="day_ended" name="day_ended" value=" day_ended ">-->
+<!--            {% if submitted %}-->
+<!--            <p> {{ event.event_value }} </p>-->
+<!--        </form>-->
+<!--        {% endif %}-->
+<!--        <br/>-->
+<!--        <br>-->
+
+
+
+
+        
+
+
+
+  </center>
+
+{% endblock %}
+

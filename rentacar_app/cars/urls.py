@@ -9,5 +9,5 @@ urlpatterns = [
     path('cars/<cars_id>', views.get_reservation_view, name='car-reservation'),
     path('<cars_id>/', views.update_view, name='car-update'),
     path('<int:id>/', views.CarsDetailView.as_view(), name='cars_detail'),
-
+    path('<int:id>/reservation_confirmed/', views.get_reservation_confirmed_view, name='reservation-confirmed'),
 ]

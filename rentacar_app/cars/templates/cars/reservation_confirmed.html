@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+ <h1>Potwierdz rezerwacje</h1>
+      Edytujesz : {{ car }}
+    <form action=" "  method="POST">
+        <title>reservation_confirmed</title>
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Kaczka2">
+
+    <h1> Zarezerwowales samochod</h1>
+    </form>
+
+
+{% endblock %}

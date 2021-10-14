@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cars
+from .models import Cars, CarsReservationHistory
 from django.utils.translation import ngettext
 # Register your models here.
 
@@ -12,5 +12,12 @@ class Admin_cars_overview(admin.ModelAdmin):
     list_filter = ('car_engine_power', 'type_of_car_engine',)
 
 
+class Admin_cars_reservation(admin.ModelAdmin):
+    list_display = ('car_id', 'day1', 'day2')
+    search_fields = ('day1', 'day2')
+    ordering = ('day1', )
+    list_filter = ('day1', 'day2',)
+
 
 admin.site.register(Cars, Admin_cars_overview)
+admin.site.register(CarsReservationHistory, Admin_cars_reservation)
