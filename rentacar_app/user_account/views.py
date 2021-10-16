@@ -108,4 +108,4 @@ def account_view(request, *args, **kwargs):
         context['is_self'] = is_self
         context['is_friend'] = is_friend
         context['BASE_URL'] = settings.BASE_URL
-        return render(request, "user_account/details.html", context)
+        return render(request, "user_account/profile_info.html", context)
