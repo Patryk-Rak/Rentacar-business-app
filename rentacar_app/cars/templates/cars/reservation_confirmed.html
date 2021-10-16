@@ -4,16 +4,46 @@
 
 {% block content %}
  <h1>Potwierdz rezerwacje</h1>
-      Edytujesz : {{ car }}
+
     <form action=" "  method="POST">
         <title>reservation_confirmed</title>
         {% csrf_token %}
         {{ form.as_p }}
 
-        <input type="submit" value="Kaczka2">
+        <input type="submit" value="Sprawdz cene">
 
-    <h1> Zarezerwowales samochod</h1>
+    <h1> Tu bedzie koszt samochodu</h1>
+            {{ car.daily_rental_cost }}
     </form>
+<button onclick="convert_date()">Click me</button>
+        <p id="demo"></p>
+ <h1> Tu bedzie koszt samochodu</h1>
+            {{ car.daily_rental_cost }}
 
 
+<script type="text/javascript">
+    function convert_date(){
+        day_1=document.getElementById("id_day1").value
+        day_2=document.getElementById("id_day2").value
+        console.log(day_1)
+        console.log(day_2)
+<!--        var convert_date= day_2.getTime - day_1.getTime;-->
+<!--        console.log(convert_date)-->
+<!--        diffTime = Math.abs(day_2 - day_1);-->
+<!--        diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));-->
+<!--        console.log(diffTime)-->
+<!--        console.log(diffDays)-->
+<!--        h = Match.floor((day_1 / (1000 * 60 * 60 *24));-->
+<!--        console.log(h)-->
+        var d = Date.parse(day_1);
+        console.log(d); //this is in milliseconds
+        var b = Date.parse(day_2);
+        console.log(b); //this is in millisecond
+        var c = b - d
+        console.log(c)
+        diffDays = Math.ceil(c / (1000 * 60 * 60 * 24));
+        console.log(diffDays)
+        document.getElementById("demo").innerHTML = diffDays;
+        }
+</script>
 {% endblock %}

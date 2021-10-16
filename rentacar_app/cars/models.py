@@ -2,13 +2,26 @@ from django.db import models
 from django.shortcuts import reverse
 import datetime
 from facilities.models import Facility
-from datetime import timedelta
+
 
 import sys
 for x in sys.path:
     print(x)
 
-# Create your models here.
+# Create your models here
+
+
+class CarEvent(models.Model):
+    id = models.AutoField(primary_key=True, null=False, blank=False)
+    day_started = models.DateTimeField()
+    day_ended = models.DateTimeField()
+
+    def event_date(self):
+        self.day_started = datetime.datetime.combine(self.day_started.date(), self.day_started.time())
+        self.day_ended = datetime.datetime.combine(self.day_ended.date(), self.day_ended.time())
+        total_value = self.day_ended - self.day_started
+        total_value2 = total_value.days
+        return total_value2
 
 
 class Cars(models.Model):
@@ -29,16 +42,18 @@ class Cars(models.Model):
     mileage = models.PositiveIntegerField(null=False, blank=False)
     daily_rental_cost = models.PositiveSmallIntegerField(null=False, blank=False)
     note = models.TextField(max_length=500, null=False, blank=False)
-    air_conditioner = models.BooleanField(verbose_name=("air conditioner"),
+    air_conditioner = models.BooleanField(verbose_name="air conditioner",
                                           default=True,
-                                          help_text=("Sprawdź czy auto jest wyposażone w klimatyzację."))
+                                          help_text="Sprawdź czy auto jest wyposażone w klimatyzację.")
     num_of_passengers = models.PositiveSmallIntegerField(null=False, blank=False)
     facility_allocation = models.ForeignKey(Facility,
                                             on_delete=models.SET_NULL,
                                             blank=True,
                                             null=True,)
     car_is_rented = models.BooleanField(default=False, null=False, blank=False)
-
+    event = models.ForeignKey(CarEvent, on_delete=models.SET_NULL,
+                                            blank=True,
+                                            null=True, )
     class Meta:
         verbose_name = "Car"
         verbose_name_plural = "Cars"
@@ -72,12 +87,42 @@ class CarsReservationHistory(models.Model):
     # event_created = models.DateTimeField(auto_now_add=True)
     # day_started = models.DateTimeField()
     # day_ended = models.DateTimeField()
-    day1 = models.DateField()
-    day2 = models.DateField()
+    day1 = models.DateTimeField()
+    day2 = models.DateTimeField()
 
     def __int__(self):
         return self.car
 
-    def reservationtime(self):
-        value = CarsReservationHistory.day1 - CarsReservationHistory.day2
-        return value.days
+    def convert_date(self):
+        self.day1 = datetime.datetime.combine(self.day1.date(), self.day1.time())
+        self.day2 = datetime.datetime.combine(self.day2.date(), self.day2.time())
+        total_value = self.day2 - self.day1
+        return total_value
+
+
+# class CarEvent(models.Model):
+#     id = models.AutoField(primary_key=True, null=False, blank=False)
+#     day_started = models.DateTimeField()
+#     day_ended = models.DateTimeField()
+#
+#     def event_date(self):
+#         self.day1 = datetime.datetime.combine(self.day1.date())
+#         self.day2 = datetime.datetime.combine(self.day2.date())
+#         total_value = self.day2 - self.day1
+#         return total_value
+
+        # def value_reservation(self):
+        #     total_value = CarsReservationHistory.day1 - datetime.timedelta(value1)
+    # @staticmethod
+    # def value_car(self):
+    #     return self.car.day2 - self.car.day1
+    #     # value = CarsReservationHistory.day1.timedelta(days=0)
+    #     # value2 = CarsReservationHistory.day2(days=0)
+    #     # value3 = str(CarsReservationHistory.day1)
+    #     # total_value = value - value2
+    #     # return total_value
+    # def value_event(self):
+    #     self.day1 = datetime.timedelta(days=0)
+    #     self.day2 = datetime.timedelta(days=0)
+    #     value = self.day2 - self.day1
+    #     return value

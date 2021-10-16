@@ -11,7 +11,7 @@ from django.views.generic import \
 
 from .filters import CarFilter
 from .forms import CarsForm, CarsReservationHistoryForm
-from .models import Cars
+from .models import Cars, CarsReservationHistory
 
 
 # Create your views here.
@@ -103,18 +103,21 @@ def get_reservation_view(request, cars_id):
 
 def get_reservation_confirmed_view(request, *args, **kwargs):
     # context = {}
+    calculated = CarsReservationHistory.objects.all()
+    car = Cars.objects.all()
     if request.method == "POST":
         form = CarsReservationHistoryForm(request.POST)
         if form.is_valid():
             form.save(commit=False)
             day1 = form.cleaned_data["day1"]
             day2 = form.cleaned_data["day2"]
+            # convert_date()
             form.save(commit=True)
-            return redirect("cars")
+            # return function(convert_date)
     else:
         form = CarsReservationHistoryForm()
     return render(request, "cars/reservation_confirmed.html",
-                  {"form": form})
+                  {"form": form, "calculated": calculated, "car":car})
 #             # CarsReservationHistoryForm.day_started = form.cleaned_data.get("day_started")
 #             # CarsReservationHistoryForm.day_ended = form.cleaned_data.get("day_ended")
 #             # return redirect("http://127.0.0.1:8000/")
@@ -155,3 +158,6 @@ def update_view(request, cars_id):
 #                                                          car: 'car'})
 #     else:
 #         return HttpResponse("Test")
+def hello(request, cars_id):
+    car = Cars.objects.get(pk=cars_id)
+    return HttpResponse(f'Hello !!!! Now is '[CarsReservationHistory.convert_date(self=get_reservation_confirmed_view(request))])
