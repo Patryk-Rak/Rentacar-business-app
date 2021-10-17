@@ -149,25 +149,26 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
+STATIC_ROOT = "C:/Users/mateu/OneDrive/Desktop/projekt2.0Git/Rentacar-business-app/rentacar_app/static"
+#STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'static_cdn')
 
-STATICFILES_DIRS = [
-    "C:/Users/mateu/OneDrive/Desktop/projekt2.0Git/Rentacar-business-app/rentacar_app/static",
-]
 #'C:/projects/DjangoProjects/Tasker/mattask/task_view/static',
-
-
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 
-PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
-STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'static_cdn')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
+#TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 
-TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
+# STATICFILES_DIRS = [
+#     "C:/Users/mateu/OneDrive/Desktop/projekt2.0Git/Rentacar-business-app/rentacar_app/static",
+# ]
 
-BASE_DIR = "http://127.0.0.1:8000"
+
+#BASE_DIR = "http://127.0.0.1:8000"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
