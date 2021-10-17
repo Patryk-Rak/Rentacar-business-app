@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Cars, Order
+from .models import Cars
 from django.forms.widgets import NumberInput
 from django import forms
 
@@ -20,16 +20,4 @@ class CarsForm(ModelForm):
 
 class DateInput(forms.DateInput):
     input_type = 'date'
-
-
-class OrderForm(ModelForm):
-
-    class Meta:
-        model = Order
-        fields = ['start_date', 'end_date',]
-
-        widgets = {
-            'start_date': DateInput(),
-            'end_date': DateInput(),
-        }
 

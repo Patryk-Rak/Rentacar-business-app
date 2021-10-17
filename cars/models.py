@@ -6,14 +6,6 @@ from user_account.models import Account
 import datetime
 
 
-
-import sys
-for x in sys.path:
-    print(x)
-
-# Create your models here.
-
-
 class Cars(models.Model):
     CATEGORIES = (
         ('P', 'Paliwo'),
@@ -68,21 +60,5 @@ class Cars(models.Model):
         return reverse('cars_detail',
                         args = (self.id))
 
-
-class Order(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
-    approved = models.BooleanField(default=False)
-    finished = models.BooleanField(default=False)
-    canceled = models.BooleanField(default=False)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    car = models.ForeignKey(Cars, on_delete=models.CASCADE)
-
-
-    # def car_rental_price(self):
-    #     from datetime import datetime
-    #     datetime_object_I = datetime.strptime(self.start_date, '%d/%m/%y %')
-    #     datetime_object_II = datetime.strptime(self.end_date, '%d/%m/%y %')
-    #     days = datetime_object_II - datetime_object_I
 
 

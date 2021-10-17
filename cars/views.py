@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import Cars
-from .forms import CarsForm, OrderForm
+from .forms import CarsForm
 from .filters import CarFilter
 
 # Create your views here.
@@ -53,6 +53,7 @@ def cars_list(request):
         cars = pg.page(1)
     return render(request, 'cars/cars.html', {'cars':cars})
 
+
 @staff_member_required
 def add_car(request):
     submitted = False
@@ -77,6 +78,7 @@ class CarsDetailView(DetailView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Cars, id=id_)
 
+
 def search_car(request):
     if request.method == "POST":
         search = request.POST.get('car_search')
@@ -85,6 +87,7 @@ def search_car(request):
         return render(request, "cars/search_car.html", {'query': search, 'query_base': cars})
     else:
         return render(request, "cars/search_car.html", {})
+
 
 @login_required(login_url="/user_account/login/")
 def get_reservation_view(request, cars_id):
@@ -112,6 +115,3 @@ def update_view(request, cars_id):
                    'form':form
                    })
 
-def rental_view(request):
-    form = OrderForm
-    return render(request, 'cars/cars_detail.html', {'form':form})
