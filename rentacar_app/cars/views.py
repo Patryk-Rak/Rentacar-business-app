@@ -8,13 +8,26 @@ from django.urls import reverse
 from django.views.generic import \
     (DetailView,
      ListView)
-
+from django.core import serializers
 from .filters import CarFilter
 from .forms import CarsForm, CarsReservationHistoryForm
 from .models import Cars, CarsReservationHistory
-
-
+import io
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import viewsets
+from .serializer import CarsSerializer, CarsReservationHistorySerializer
 # Create your views here.
+
+
+class CarsViewSet(viewsets.ModelViewSet):
+    queryset = Cars.objects.all()
+    serializer_class = CarsSerializer
+
+
+class CarsReservationHistoryViewSet(viewsets.ModelViewSet):
+    queryset = CarsReservationHistory.objects.all()
+    serializer_class = CarsReservationHistorySerializer
 
 
 def car_filter(request):
@@ -90,34 +103,52 @@ def search_car(request):
 
 
 @login_required(login_url="/user_account/login/")
-def get_reservation_view(request, cars_id):
+def get_reservation_view(request, cars_id, *args, **kwargs):
     car = Cars.objects.get(pk=cars_id)
     if car.car_is_rented == False:
         # car.car_is_rented = 'Zarezerwowany'
         car.save()
-        return render(request, "cars/reservation.html", {'car': car})
-    else:
-        return HttpResponse("Auto jest wypozyczone")\
-
-
-
-def get_reservation_confirmed_view(request, *args, **kwargs):
-    # context = {}
-    calculated = CarsReservationHistory.objects.all()
-    car = Cars.objects.all()
-    if request.method == "POST":
-        form = CarsReservationHistoryForm(request.POST)
-        if form.is_valid():
-            form.save(commit=False)
-            day1 = form.cleaned_data["day1"]
-            day2 = form.cleaned_data["day2"]
-            # convert_date()
-            form.save(commit=True)
-            # return function(convert_date)
-    else:
         form = CarsReservationHistoryForm()
-    return render(request, "cars/reservation_confirmed.html",
-                  {"form": form, "calculated": calculated, "car":car})
+        if request.method == 'POST':
+            form = CarsReservationHistoryForm(request.POST)
+            if form.is_valid():
+                form.save(commit=False)
+                day1 = form.cleaned_data["day1"]
+                day2 = form.cleaned_data["day2"]
+                form.save(commit=True)
+        return render(request, "cars/reservation.html", {'car': car,
+                                                         'form': form})
+    else:
+        return HttpResponse("Auto jest wypozyczone")
+
+
+def get_reservation_confirmed_view(request, cars_id):
+    car = Cars.objects.get(pk=cars_id)
+    form = CarsReservationHistoryForm()
+    return render(request, 'cars/reservation_confirmed.html', {'car': car,
+                                                               'form': form})
+
+
+# @api_view(['POST'])
+# def get_reservation_confirmed_view(request,):
+#     # context = {}zz
+#     calculated = CarsReservationHistory.objects.all()
+#     # car = Cars.objects.all()
+#     if request.method == "POST":
+#         # form = CarsReservationHistoryForm(request.POST)
+#         if form.is_valid():
+#             form.save(commit=False)
+#             day1 = form.cleaned_data["day1"]
+#             day2 = form.cleaned_data["day2"]
+#             form.save(commit=True)
+#             # serializer = CarsReservationHistorySerializer(data=request.data)
+#             # if serializer.is_valid():
+#             #     serializer.save()
+#                 return Response(serializer.data)
+#     else:
+#         form = CarsReservationHistoryForm()
+#     return render(request, "cars/reservation_confirmed.html",
+#                   {"form": form, "calculated": calculated, "car":car, })
 #             # CarsReservationHistoryForm.day_started = form.cleaned_data.get("day_started")
 #             # CarsReservationHistoryForm.day_ended = form.cleaned_data.get("day_ended")
 #             # return redirect("http://127.0.0.1:8000/")

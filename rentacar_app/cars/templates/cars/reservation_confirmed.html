@@ -9,16 +9,23 @@
         <title>reservation_confirmed</title>
         {% csrf_token %}
         {{ form.as_p }}
-
+        {% for car in cars %}
+            <h2> calkowity koszt wynajmu :{{ CarsReservationHistory.convert_date }}</h2>
+        {% endfor %}
         <input type="submit" value="Sprawdz cene">
 
     <h1> Tu bedzie koszt samochodu</h1>
-            {{ car.daily_rental_cost }}
     </form>
+    {% if form.is_valid %}
+        {{ show_value }}
+    {% endif %}
+
+
 <button onclick="convert_date()">Click me</button>
         <p id="demo"></p>
  <h1> Tu bedzie koszt samochodu</h1>
-            {{ car.daily_rental_cost }}
+<button onclick="get_value()">Value</button>
+        <p id="value"></p>
 
 
 <script type="text/javascript">
@@ -44,6 +51,10 @@
         diffDays = Math.ceil(c / (1000 * 60 * 60 * 24));
         console.log(diffDays)
         document.getElementById("demo").innerHTML = diffDays;
+        }
+    function get_value(){
+        var value = ' value|escapejs ';
+        document.getElementById("value").innerHTML = value;
         }
 </script>
 {% endblock %}

@@ -90,14 +90,21 @@ class CarsReservationHistory(models.Model):
     day1 = models.DateTimeField()
     day2 = models.DateTimeField()
 
+    class Meta:
+        verbose_name = "CarHistory"
+        verbose_name_plural = "CarsHistory"
+
     def __int__(self):
         return self.car
 
     def convert_date(self):
         self.day1 = datetime.datetime.combine(self.day1.date(), self.day1.time())
         self.day2 = datetime.datetime.combine(self.day2.date(), self.day2.time())
-        total_value = self.day2 - self.day1
-        return total_value
+        total_value = self.day2.day - self.day1.day
+        prize = total_value * Cars.daily_rental_cost
+        return prize
+
+
 
 
 # class CarEvent(models.Model):
