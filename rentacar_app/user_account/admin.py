@@ -9,7 +9,6 @@ class AccountAdmin(UserAdmin):
     search_fields = ('email', 'first_name', 'last_name', 'last_login')
     readonly_fields = ('id', 'date_joined', 'last_login')
 
-
     filter_horizontal = ()
     list_filter = ()
 
@@ -28,5 +27,26 @@ class AccountAdmin(UserAdmin):
     )
 
 
+class ClientProfileAdmin(UserAdmin):
+    ordering = ('user',)
+    list_display = ('user', 'phone_number', 'address1', 'address2', 'postcode', 'state', 'country', 'state_region')
+    search_fields = ('user', 'phone_number', 'address1', 'address2', 'postcode', 'state', 'country', 'state_region')
+
+    filter_horizontal = ()
+    list_filter = ()
+
+    fieldsets = (
+        (None, {'fields': ('user',)}),
+        ('Personal info', {'fields': ('phone_number', 'address1', 'address2', 'postcode', 'state', 'country', 'state_region')}),
+        )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('user', 'phone_number', 'address1', 'address2', 'postcode', 'state', 'country', 'state_region'),
+        }),
+
+    )
+
 
 admin.site.register(Account, AccountAdmin)
+admin.site.register(ClientProfile, ClientProfileAdmin)

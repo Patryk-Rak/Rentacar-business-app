@@ -1,12 +1,20 @@
-from django.conf import settings #TODO: ADD THIS LINE.
+from django.conf import settings  # TODO: ADD THIS LINE.
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
-from .forms import AccountRegistrationForm, ClientProfileForm
-from .models import Account
+from .forms import AccountRegistrationForm, AccountAuthenticationForm, AccountEditForm
+from .models import Account, ClientProfile
+
+
+def get_redirect_if_exists(request):
+    redirect = None
+    if request.GET:
+        if request.GET.get("next"):
+            redirect = str(request.GET.get("next"))
+    return redirect
 
 
 def register_view(request, *args, **kwargs):
@@ -16,28 +24,49 @@ def register_view(request, *args, **kwargs):
     context = {}
 
     if request.POST:
-        form = AccountRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email').lower()
-            raw_password = form.cleaned_data.get('password1')
+        account_form = AccountRegistrationForm(request.POST)
+        if account_form.is_valid():
+            account_form.save()
+            email = account_form.cleaned_data.get('email').lower()
+            raw_password = account_form.cleaned_data.get('password1')
             account = authenticate(email=email, password=raw_password)
             login(request, account)
-            destination = kwargs.get("next")
+            destination = get_redirect_if_exists(request)
             if destination:
                 return redirect(destination)
             return redirect("http://127.0.0.1:8000/")
         else:
-            context['registration_form'] = form
-
+            context['registration_form'] = account_form
 
     return render(request, 'user_account/register.html', context)
 
-# def logout_view(request, *args, **kwargs):
-#     logout(request)
-#     return redirect("http://127.0.0.1:8000/")
-#
-# def login_view(request, *args, **kwargs):
+
+def logout_view(request, *args, **kwargs):
+    logout(request)
+    return redirect("http://127.0.0.1:8000/")
+
+
+def login_view(request, *args, **kwargs):
+    context = {}
+
+    user = request.user
+    if user.is_authenticated:
+        return redirect("http://127.0.0.1:8000/")
+
+    destination = get_redirect_if_exists(request)
+    if request.POST:
+        form = AccountAuthenticationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(email=email, password=password)
+            if user:
+                login(request, user)
+                destination = get_redirect_if_exists(request)
+                if destination:
+                    return redirect(destination)
+                return redirect("http://127.0.0.1:8000/")
+    return render(request, "user_account/login.html", context)
 
 
 # class UserListView(ListView):
@@ -62,8 +91,6 @@ def register_view(request, *args, **kwargs):
 #     user.delete()
 #     return redirect('name_user_list_view')
 
-# TODO: ADD THIS METHOD.
-
 def account_view(request, *args, **kwargs):
     """
     - Logic here is kind of tricky
@@ -77,14 +104,25 @@ def account_view(request, *args, **kwargs):
     user_id = kwargs.get("user_id")
     try:
         account = Account.objects.get(pk=user_id)
+        client_details = ClientProfile.objects.get(pk=user_id)
     except:
         return HttpResponse("Something went wrong.")
     if account:
         context['id'] = account.id
-        context['username'] = account.username
         context['email'] = account.email
-        context['profile_image'] = account.profile_image.url
+        context['first_name'] = account.first_name
+        context['last_name'] = account.last_name
         context['hide_email'] = account.hide_email
+
+        if client_details:
+            context['user_id'] = client_details.user_id
+            context['phone_number'] = client_details.phone_number
+            context['address1'] = client_details.address1
+            context['address2'] = client_details.address2
+            context['postcode'] = client_details.postcode
+            context['state'] = client_details.state
+            context['country'] = client_details.country
+            context['state_region'] = client_details.state_region
 
         # Define template variables
         is_self = True
@@ -99,42 +137,43 @@ def account_view(request, *args, **kwargs):
         context['is_self'] = is_self
         context['is_friend'] = is_friend
         context['BASE_URL'] = settings.BASE_URL
-        return render(request, "account/account.html", context)
+        return render(request, "user_account/profile_info.html", context)
 
-# class SignUpView(CreateView):
-#     form_class = AccountRegistrationForm
-#     success_url = reverse_lazy('login')
-#     template_name = 'user_account/signup.html'
-#
-# def register(request):
-#     if request.method == 'POST':
-#         form = CustomUserCreationForm(data=request.POST)
-#         profile_form = ClientProfileForm(data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             profile_form.save()
-#             return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#         else:
-#             messages.error(request, "źle wprowadzone dane.")
-#     else:
-#         form = PasswordChangeForm(request.user)
-#         profile_form = ClientProfileForm(request.user)
-#         context = {'form' : form, 'profile_form' : profile_form}
-#     return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#
-#
-# def password_change_view(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(user=request.user, data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user)
-#             messages.success(request, 'Twoje hasło zostało zmienione :)!')
-#             return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#         else:
-#             messages.error(request, "źle wprowadzone dane.")
-#     else:
-#         form = PasswordChangeForm(request.user)
-#     return render(request, 'user_account/change_password.html', {'change_password_form': form})
-#
-#
+
+def edit_account_view(request, *args, **kwargs):
+    if not request.user.is_authenticated:
+        return redirect("login")
+    user_id = kwargs.get("user_id")
+    account = Account.objects.get(pk=user_id)
+    if account.pk != request.user.pk:
+        return HttpResponse("You cannot edit someone elses profile.")
+    context = {}
+    if request.POST:
+        form = AccountEditForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("account:view", user_id=account.pk)
+        else:
+            form = AccountEditForm(request.POST, instance=request.user,
+                                     initial={
+                                         "id": account.pk,
+                                         "email": account.email,
+                                         "first_name": account.first_name,
+                                         "last_name": account.last_name,
+                                         "hide_email": account.hide_email,
+                                     }
+                                     )
+            context['form'] = form
+    else:
+        form = AccountEditForm(
+            initial={
+                "id": account.pk,
+                "email": account.email,
+                "first_name": account.first_name,
+                "last_name": account.last_name,
+                "hide_email": account.hide_email,
+            }
+        )
+        context['form'] = form
+    context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
+    return render(request, "user_account/profile_edit.html", context)

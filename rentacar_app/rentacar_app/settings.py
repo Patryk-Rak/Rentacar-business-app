@@ -26,6 +26,9 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.email.backends.console.EmailBackend'  #development only
+
 ALLOWED_HOSTS = []
 
 
@@ -159,6 +162,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
 
 BASE_DIR = "http://127.0.0.1:8000"
+BASE_URL = "http://127.0.0.1:8000"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

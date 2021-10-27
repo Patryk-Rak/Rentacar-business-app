@@ -2,7 +2,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 from django.conf import settings
 import os
-from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 
 class AccountManager(BaseUserManager):
@@ -32,8 +34,8 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    first_name = models.CharField(max_length=60, null=False, blank=True)
-    last_name = models.CharField(max_length=60, null=False, blank=True)
+    first_name = models.CharField(max_length=60, blank=True)
+    last_name = models.CharField(max_length=60, blank=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False)
@@ -66,8 +68,19 @@ class Worker(models.Model):
 
 class ClientProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
-    phone_number = models.PositiveIntegerField()
-    address = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20, blank=True)
+    address1 = models.CharField(max_length=50, blank=True)
+    address2 = models.CharField(max_length=30, blank=True)
+    postcode = models.CharField(max_length=10, blank=True)
+    state = models.CharField(max_length=30, blank=True)
+    country = models.CharField(max_length=20, blank=True)
+    state_region = models.CharField(max_length=30, blank=True)
 
-    def __str__(self):
-        return self.user.email
+    @receiver(post_save, sender=Account)
+    def create_client_profile(sender, instance, created, **kwargs):
+        if created:
+            ClientProfile.objects.create(user=instance)
+
+    @receiver(post_save, sender=Account)
+    def save_client_profile(sender, instance, **kwargs):
+        instance.clientprofile.save()

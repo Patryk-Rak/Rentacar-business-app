@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
+from django.db import transaction
 
 from .models import Account, ClientProfile
 
@@ -39,32 +39,26 @@ class AccountAuthenticationForm(forms.ModelForm):
                 raise forms.ValidationError("Invalid login")
 
 
-class ClientProfileForm(ModelForm):
-    class Meta:
-        model = ClientProfile
-        fields = ('phone_number', 'address')
+class AccountEditForm(forms.ModelForm):
 
-
-class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = Account
-        fields = ('email',)
+        fields = ('email', 'first_name', 'last_name', 'hide_email' )
 
-# from django import forms
-# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-#
-# from .models import CustomUser
-#
-#
-# class CustomUserCreationForm(UserCreationForm):
-#
-#     class Meta(UserCreationForm.Meta):
-#         model = CustomUser
-#         fields = ('email', )
-#
-#
-# class CustomUserChangeForm(UserChangeForm):
-#
-#     class Meta:
-#         model = CustomUser
-#         fields = ('email', )
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        try:
+            account = Account.objects.exclude(pk=self.instance.pk).get(email=email)
+        except Account.DoesNotExist:
+            return email
+        raise forms.ValidationError('Email "%s" is already in use.' % account)
+
+    def save(self, commit=True):
+        account = super(AccountEditForm, self).save(commit=False)
+        account.email = self.cleaned_data['email'].lower()
+        account.first_name = self.cleaned_data['first_name']
+        account.last_name = self.cleaned_data['last_name']
+        account.hide_email = self.cleaned_data['hide_email']
+        if commit:
+            account.save()
+        return account

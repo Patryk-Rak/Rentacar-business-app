@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+<style type="text/css">
+	.image-container{
+		max-width: 250px;
+		height: auto;
+		position: relative;
+	}
+	.field-heading{
+		color: #737373;
+	}
+	#id_confirm{
+		color: green;
+	}
+	#id_confirm:hover {
+		opacity: 0.3;
+	}
+	#id_cancel:hover {
+		opacity: 0.3;
+	}
+	#id_cancel{
+		color: red;
+	}
+	.material-icons{
+		font-size: 30px;
+	}
+	.material-icons:hover{
+		cursor: pointer;
+	}
+</style>
+
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="card profile-card">
+		  <div class="card-body">
+		  	<div class="d-flex flex-column justify-content-center p-4">
+		  		<div class="mb-2" id="id_image_crop_confirm">
+		  			<span id="id_cancel" class="material-icons">cancel</span>
+		  			<span id="id_confirm" class="material-icons">check</span>
+		  		</div>
+		  		<div class="image-container" id="id_image_container">
+	  				<img class="border border-dark rounded-circle img-fluid mx-auto profile-image" id="id_profile_image" src="{{form.initial.profile_image.url}}" alt="codingwithmitch logo">
+					<div class="middle" id="id_middle_container">
+						<div class="text" id="id_text">Edit</div>
+					</div>
+		  		</div>
+		  		<form class="form-signin" method="post">{% csrf_token %}
+		  			<input class="d-none" type="file" id="id_profile_image_file_selector" name="profile_image_file_selector" onchange="readURL(this)">
+			  		<h6 class="mt-4 field-heading">Email</h6>
+			  		<input type="email" name="email" id="id_input_email" class="form-control" placeholder="Email address" required autofocus value={{form.initial.email}}>
+					<div class="mt-4 checkbox">
+						<label>
+							<input type="checkbox" name="hide_email" id="id_input_hide_email" {% if form.initial.hide_email %}checked{%endif%}>
+							Hide Email
+						</label>
+
+					</div>
+
+					{% for field in form %}
+					<p>
+					{% for error in field.errors %}
+					<p style="color: red">{{ error }}</p>
+					{% endfor %}
+					</p>
+					{% endfor %}
+					{% if form.non_field_errors %}
+					<div style="color: red">
+					<p>{{form.non_field_errors}}</p>
+					</div>
+
+					{% endif %}
+
+					<div class="d-flex flex-column mt-4">
+						<button class="mt-4 btn btn-primary flex-grow-1" type="submit">Save</button>
+					</div>
+
+				</form>
+
+		  	</div>
+		  </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container rounded bg-white mt-5 mb-5" style="padding-top: 25px">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-1"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span>
+				<span class="text-black-50">
+					{%  if is_self %}
+		  			{{email}}
+		  		{% else %}
+		  			{% if hide_email %}
+			  			**********
+			  		{% else %}
+			  			{{email}}>
+			  		{% endif %}
+			  	{% endif %}
+				</span>
+				<span style="padding-top: 10px">
+					<a class="btn btn-outline-danger shadow-p p-1 mb-2 bg-red rounded">Edit Profile</a>
+				</span>
+				<span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-1">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <h4 class="text-right">Profile Info</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
+                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
+                </div>
+                <div class="row mt-3">
+                     <div class="col-md-12"><label class="labels">Company Name</label><input type="text" class="form-control" placeholder="enter company name" value=""></div>
+                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
+                    <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
+                    <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
+                    <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
+                    <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
+                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-1">
+				<div class="row justify-content-center" style="padding-top: 60px">
+					<a class="btn btn-outline-danger shadow-p p-3 mb-2 bg-red rounded">Bookings</a>
+				</div>
+				<div class="row justify-content-center" style="padding-top: 0px">
+					<a class="btn btn-outline-danger shadow-p p-3 mb-3 bg-red rounded">Transactions</a>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
