@@ -1,0 +1,68 @@
+<nav class="navbar fixed-top py-3 navbar-expand-lg navbar-light bg-light shadow-sm">
+     <div class="container-fluid" style="padding-right: 200px; padding-left:200px;">
+      <a class="navbar-brand" href="#">
+         RENTACAR<img src="/static/images/logo.png" width="130" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="col-auto">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         <li class="nav-item">
+           <a class="nav-link" aria-current="page" href="{% url 'home_app:home' %}">Strona Główna</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link active" href="{% url 'main_app:cars' %}">Auta</a>
+         </li>
+         <li class="nav-item dropdown">
+           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            O nas
+           </a>
+           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+           </ul>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="{% url 'contact:contact-view' %}">Kontakt</a>
+         </li>
+
+         <li class="nav-item" style="padding-top:7px; padding-bottom:7px;">
+            <form class="form-inline my-0 my-lg-0"  method="post" action="{% url 'main_app:search-car' %}">
+			    {% csrf_token %}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="car_search" style="width: 100px;">
+            </form>
+        </li>
+         <li class="nav-item" style="flex-direction: row;">
+        {% if user.is_authenticated %}
+             <div class="row">
+                 <div class="col-sm">
+                     <p>Wyloguj się</p>
+                 </div>
+                 <div class="col-sm">
+          <p><a href="{% url 'logout' %}"><span class="material-icons">logout</span></a></p>
+                 </div>
+        {% else %}
+             <div class="row">
+                <div class="col-sm">
+                  <p>Zaloguj się</p>
+                </div>
+                <div class="col-sm">
+                  <a href="{% url 'login' %}"><span class="material-icons">login</span></a>
+                </div>
+             </div>
+        {% endif %}
+         </li>
+
+			</li>
+        </ul>
+      </div>
+      </div>
+     </div>
+
+</nav>
+
+<!--<div style="margin:108px; opacity:0;"></div>-->

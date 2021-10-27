@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+
+{% block title %}{% endblock %}
+{% block content %}
+
+
+  <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+ <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+ </div>
+
+    <div class="carousel-inner">
+
+        <div class="carousel-item active"
+        style="background-image:url(/static/cars/images/I1.jpg); background-size:cover;">
+
+          <div class ="container_slider">
+                <center>
+                <h1>TEST 1</h1>
+                <p>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsum</p>
+                <a href="#" class="btn btn-lg btn-primary">rezerwuj</a>
+              </center>
+          </div>
+        </div>
+
+        <div class="carousel-item"
+        style="background-image:url(/static/cars/images/I2.jpg); background-size:cover;">
+
+          <div class ="container_slider">
+                <center>
+                <h1>TEST 2</h1>
+                <p>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsum</p>
+                <a href="#" class="btn btn-lg btn-primary">doweidz się więcej</a>
+              </center>
+          </div>
+        </div>
+
+       <div class="carousel-item"
+       style="background-image:url(/static/cars/images/I3.jpg); background-size:cover;">
+
+          <div class ="container_slider">
+                <center>
+                <h1>TEST 3</h1>
+                <p>lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum
+                lorem ipsumlorem ipsumlorem ipsum</p>
+                <a href="#" class="btn btn-lg btn-primary">sprawdz inne oferty</a>
+              </center>
+          </div>
+        </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+<!--  <div class="car_info">-->
+<!--    <center>-->
+<!--      marka :  {{object.mark}} <br/>-->
+<!--      model :  {{object.model}} <br/>-->
+<!--      kolor :  {{object.color}} <br/>-->
+<!--      koszt :  {{object.daily_rental_cost}} zł<br/>-->
+<!--      rok produkcji : {{object.year_of_production}}-->
+<!--    </center>-->
+<!--  </div>-->
+
+{% endblock %}
+
+
+
+
+
+
+
+<!--<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">-->
+<!--  <div class="carousel-inner">-->
+<!--    <div class="carousel-item active">-->
+<!--      <img src="/static/cars/images/I1.jpg" class="d-block w-100" alt="photo 1">-->
+<!--    </div>-->
+<!--    <div class="carousel-item">-->
+<!--      <img src="/static/cars/images/I2.jpg" class="d-block w-100" alt="photo 2">-->
+<!--    </div>-->
+<!--    <div class="carousel-item">-->
+<!--      <img src="/static/cars/images/I3.jpg" class="d-block w-100" alt="photo 3">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">-->
+<!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--    <span class="visually-hidden">Previous</span>-->
+<!--  </button>-->
+<!--  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">-->
+<!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--    <span class="visually-hidden">Next</span>-->
+<!--  </button>-->
+<!--</div>-->

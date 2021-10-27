@@ -9,24 +9,30 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
-from pathlib import Path
+import os
 from decouple import config
+import dj_database_url
+import django_heroku
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = "chomik"
+#SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['heroku-car-rental-app-smp.herokuapp.com',
+                 '127.0.0.1']
+#ALLOWED_HOSTS = ["rentacar_app.herokuapp.com"]
 
 
 # Application definition
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'cars',
     'user_contact',
     'facilities',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +55,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +70,7 @@ ROOT_URLCONF = 'rentacar_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,23 +89,18 @@ WSGI_APPLICATION = 'rentacar_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': BASE_DIR / 'db.sqlite3',
-     }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'rental_car_app_database',
+        'USER': 'postgres',
+        'PASSWORD': 'Base_Manager0!7',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'rentacar_app_db',
-#        'USER': 'root',
-#        'PASSWORD': 'Base_Manager0!7',
-#        'HOST': '127.0.0.1',
-#        'PORT': '3306',
-#    }
-# }
 
 
 
@@ -145,8 +148,29 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
+#STATIC_ROOT = "C:/Users/mateu/OneDrive/Desktop/projekt2.0Git/Rentacar-business-app/rentacar_app/static"
+STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 
+#'C:/projects/DjangoProjects/Tasker/mattask/task_view/static',
 STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
+
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
+#TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
+
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
+#BASE_DIR = "http://127.0.0.1:8000"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -154,14 +178,19 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CRISPY_TEMPLATE_PACK="bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-EMAIL_BACKEND = config("EMAIL_BACKEND")
-SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+# EMAIL_BACKEND = config("EMAIL_BACKEND")
+# SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+#
+# DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
+prod_db = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
+
+django_heroku.settings(locals())

@@ -53,6 +53,7 @@ def cars_list(request):
         cars = pg.page(1)
     return render(request, 'cars/cars.html', {'cars':cars})
 
+
 @staff_member_required
 def add_car(request):
     submitted = False
@@ -60,13 +61,12 @@ def add_car(request):
         form = CarsForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(redirect_to=reverse("add-car"))
+            return HttpResponseRedirect(redirect_to=reverse("main_app:add-car"))
     else:
         form = CarsForm
         if 'submitted' in request.GET:
             submitted = True
-
-    return render(request, "cars/add_car.html", {'form':form, 'submitted':submitted})
+    return render(request, "cars/add_car.html", {'form': form, 'submitted': submitted})
 
 
 class CarsDetailView(DetailView):
@@ -77,6 +77,7 @@ class CarsDetailView(DetailView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Cars, id=id_)
 
+
 def search_car(request):
     if request.method == "POST":
         search = request.POST.get('car_search')
@@ -85,6 +86,8 @@ def search_car(request):
         return render(request, "cars/search_car.html", {'query': search, 'query_base': cars})
     else:
         return render(request, "cars/search_car.html", {})
+
+
 
 @login_required(login_url="/user_account/login/")
 def get_reservation_view(request, cars_id):
@@ -100,6 +103,7 @@ def get_reservation_view(request, cars_id):
 #     car = Cars.objects.get(pk=cars_id)
 #     return render(request, 'cars/cars_info_update.html', {'car':car})
 
+
 @staff_member_required
 def update_view(request, cars_id):
     car = Cars.objects.get(pk=cars_id)
@@ -112,6 +116,3 @@ def update_view(request, cars_id):
                    'form':form
                    })
 
-
-def lalal(request):
-    pass
