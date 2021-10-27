@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
-from pathlib import Path
 from decouple import config
 import dj_database_url
 import django_heroku
@@ -31,22 +30,14 @@ SECRET_KEY = "chomik"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.email.backends.console.EmailBackend'  #development only
-
-ALLOWED_HOSTS = []
-
-#ALLOWED_HOSTS = ['heroku-car-rental-app-smp.herokuapp.com',
-#                 '127.0.0.1']
+ALLOWED_HOSTS = ['heroku-car-rental-app-smp.herokuapp.com',
+                 '127.0.0.1']
 #ALLOWED_HOSTS = ["rentacar_app.herokuapp.com"]
-
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
     'user_account',
     'homepage',
     'cars',
@@ -100,12 +91,6 @@ WSGI_APPLICATION = 'rentacar_app.wsgi.application'
 
 
 DATABASES = {
-
-     # 'default': {
-     #     'ENGINE': 'django.db.backends.sqlite3',
-     #     'NAME': 'db.sqlite3',
-     # }
-
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'rental_car_app_database',
@@ -114,7 +99,6 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
-
 }
 
 
@@ -165,42 +149,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 PROJECT_ROOT = os.path.join(os.path.abspath(__file__))
-#STATIC_ROOT = "C:/Users/mateu/OneDrive/Desktop/projekt2.0Git/Rentacar-business-app/rentacar_app/static"
-STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
-
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'media'),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
+BASE_URL = "home"
 
-TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
-BASE_DIR = "http://127.0.0.1:8000"
-BASE_URL = "http://127.0.0.1:8000"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+#STATIC_ROOT = "C:/Users/mateu/OneDrive/Desktop/projekt2.0Git/Rentacar-business-app/rentacar_app/static"
 
 #'C:/projects/DjangoProjects/Tasker/mattask/task_view/static',
-STATIC_URL = '/static/'
+
 # MEDIA_URL = '/media/'
 
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 #TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
 
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-
 #BASE_DIR = "http://127.0.0.1:8000"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
