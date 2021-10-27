@@ -20,7 +20,7 @@
 			  	{% endif %}
 				</span>
 				<span style="padding-top: 10px">
-					<a class="btn btn-outline-danger shadow-p p-1 mb-2 bg-red rounded">Edit Profile</a>
+					<a class="btn btn-outline-danger shadow-p p-1 mb-2 bg-red rounded" href="{% url 'account:edit' user_id=id %}">Edit Profile</a>
 				</span>
 				<span> </span></div>
         </div>
@@ -30,20 +30,92 @@
                     <h4 class="text-right">Profile Info</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">Jan</div></div>
-                    <div class="col-md-6"><label class="labels">Surname</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">Kowalski</div></div>
+                    <div class="col-md-6"><label class="labels">Name</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not first_name %}
+                            Empty
+		  		        {% else %}
+                        {{first_name}}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6"><label class="labels">Surname</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not last_name %}
+                            Empty
+		  		        {% else %}
+                        {{last_name}}
+                        {% endif %}
+                        </div>
+                    </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12"><label class="labels">Company Name</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">Januszex</div></div>
-                    <div class="col-md-12"><label class="labels">Mobile Number</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">+48 111 222 333</div></div>
-                    <div class="col-md-12"><label class="labels">Address Line 1</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">al. Kwiatowa</div></div>
-                    <div class="col-md-12"><label class="labels">Address Line 2</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">42A</div></div>
-                    <div class="col-md-12"><label class="labels">Postcode</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">50-200</div></div>
-                    <div class="col-md-12"><label class="labels">State</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">Dolnyśląsk</div></div>
+                    <div class="col-md-12"><label class="labels">Mobile Number</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not phone_number %}
+		  			        empty
+		  		        {% else %}
+                        {{phone_number}}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Address Line 1</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not address1 %}
+		  			        empty
+		  		        {% else %}
+                        {{address1}}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Address Line 2</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not address2 %}
+		  			        empty
+		  		        {% else %}
+                        {{address2}}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Postcode</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not postcode %}
+		  			        empty
+		  		        {% else %}
+                        {{postcode}}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">State</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not state %}
+		  			        empty
+		  		        {% else %}
+                        {{state}}
+                        {% endif %}
+                        </div>
+                    </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">Polska</div></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">Dolnyśląsk</div></div>
+                    <div class="col-md-6"><label class="labels">Country</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not country %}
+		  			        empty
+		  		        {% else %}
+                        {{country}}
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6"><label class="labels">State/Region</label>
+                        <div style="box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;">
+                        {%  if not state_region %}
+		  			        empty
+		  		        {% else %}
+                        {{state_region}}
+                        {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
