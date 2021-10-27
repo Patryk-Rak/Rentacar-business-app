@@ -105,59 +105,25 @@ def search_car(request):
 @login_required(login_url="/user_account/login/")
 def get_reservation_view(request, cars_id, *args, **kwargs):
     car = Cars.objects.get(pk=cars_id)
-    if car.car_is_rented == False:
-        # car.car_is_rented = 'Zarezerwowany'
-        car.save()
-        form = CarsReservationHistoryForm()
-        if request.method == 'POST':
-            form = CarsReservationHistoryForm(request.POST)
-            if form.is_valid():
-                form.save(commit=False)
-                day1 = form.cleaned_data["day1"]
-                day2 = form.cleaned_data["day2"]
-                form.save(commit=True)
-        return render(request, "cars/reservation.html", {'car': car,
-                                                         'form': form})
-    else:
+    if car.car_is_rented == True:
+
         return HttpResponse("Auto jest wypozyczone")
-
-
-def get_reservation_confirmed_view(request, cars_id):
-    car = Cars.objects.get(pk=cars_id)
+        # context = {}# car.car_is_rented = 'Zarezerwowany'
+        # form = CarsReservationHistoryForm()
     form = CarsReservationHistoryForm()
-    return render(request, 'cars/reservation_confirmed.html', {'car': car,
-                                                               'form': form})
+    if request.POST:
+        form = CarsReservationHistoryForm(request.POST)
+        if form.is_valid():
+            form.save(commit=False)
+            day1 = form.cleaned_data.get("day1")
+            day2 = form.cleaned_data.get("day2")
+            form.save(commit=True)
+            return redirect('cars')
+    return render(request, "cars/reservation.html", {'car': car,
+                                                         'form': form})
 
 
-# @api_view(['POST'])
-# def get_reservation_confirmed_view(request,):
-#     # context = {}zz
-#     calculated = CarsReservationHistory.objects.all()
-#     # car = Cars.objects.all()
-#     if request.method == "POST":
-#         # form = CarsReservationHistoryForm(request.POST)
-#         if form.is_valid():
-#             form.save(commit=False)
-#             day1 = form.cleaned_data["day1"]
-#             day2 = form.cleaned_data["day2"]
-#             form.save(commit=True)
-#             # serializer = CarsReservationHistorySerializer(data=request.data)
-#             # if serializer.is_valid():
-#             #     serializer.save()
-#                 return Response(serializer.data)
-#     else:
-#         form = CarsReservationHistoryForm()
-#     return render(request, "cars/reservation_confirmed.html",
-#                   {"form": form, "calculated": calculated, "car":car, })
-#             # CarsReservationHistoryForm.day_started = form.cleaned_data.get("day_started")
-#             # CarsReservationHistoryForm.day_ended = form.cleaned_data.get("day_ended")
-#             # return redirect("http://127.0.0.1:8000/")
-#         else:
-#             # context['registration_form'] = form
-#             return HttpResponse("Huj bombelki nie dziala")
-# # def update_view(request, cars_id ):
-#     car = Cars.objects.get(pk=cars_id)
-#     return render(request, 'cars/cars_info_update.html', {'car':car})
+
 
 @staff_member_required
 def update_view(request, cars_id):

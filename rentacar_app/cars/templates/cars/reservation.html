@@ -15,16 +15,18 @@
         marka :  {{ car.mark }} <br/>
         model :  {{ car.model }} <br/>
         kolor :  {{ car.color }} <br/>
-        koszt :  {{ car.daily_rental_cost }} <br/>
+        koszt : <div id="koszt">{{ car.daily_rental_cost }}</div><br/>
+
         rok produkcji : {{ car.year_of_production }} <br/>
         status : {{ car.car_is_rented }} <br/>
         lokalizacja : {{ car.facility_allocation }} <br/>
 
-        <a href="{% url 'reservation-confirmed' car.id %}">Potwierdz</a>
+        <button class="btn btn-outline-danger shadow-p p-3 mb-5 bg-red rounded" type="submit">Potwierdz</button>
 
     </form>
 
-
+<button onclick="convert_date()">Click me</button>
+        <p id="demo"></p>
 
 
 
@@ -52,5 +54,31 @@
 
   </center>
 
-{% endblock %}
 
+<script type="text/javascript">
+    function convert_date(){
+        day_1=document.getElementById("id_day1").value
+        day_2=document.getElementById("id_day2").value
+        var koszt1 = document.getElementById('koszt');
+        koszt2 = koszt1.innerHTML
+        console.log(koszt2)
+        console.log(day_1)
+        console.log(day_2)
+
+        var d = Date.parse(day_1);
+
+        console.log(d); //this is in milliseconds
+        var b = Date.parse(day_2);
+        console.log(b); //this is in millisecond
+
+        var c = b - d
+        console.log(c)
+        diffDays = Math.ceil(c / (1000 * 60 * 60 * 24));
+        prize = diffDays * koszt2
+        console.log(diffDays)
+        document.getElementById("demo").innerHTML = prize;
+        }
+
+
+</script>
+{% endblock %}

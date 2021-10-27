@@ -83,10 +83,6 @@ class Cars(models.Model):
 
 class CarsReservationHistory(models.Model):
     car = models.ForeignKey(Cars, on_delete=models.CASCADE)
-    # event_created = models.DateTimeField(auto_now_add=True)
-    # event_created = models.DateTimeField(auto_now_add=True)
-    # day_started = models.DateTimeField()
-    # day_ended = models.DateTimeField()
     day1 = models.DateTimeField()
     day2 = models.DateTimeField()
 
@@ -107,29 +103,3 @@ class CarsReservationHistory(models.Model):
 
 
 
-# class CarEvent(models.Model):
-#     id = models.AutoField(primary_key=True, null=False, blank=False)
-#     day_started = models.DateTimeField()
-#     day_ended = models.DateTimeField()
-#
-#     def event_date(self):
-#         self.day1 = datetime.datetime.combine(self.day1.date())
-#         self.day2 = datetime.datetime.combine(self.day2.date())
-#         total_value = self.day2 - self.day1
-#         return total_value
-
-        # def value_reservation(self):
-        #     total_value = CarsReservationHistory.day1 - datetime.timedelta(value1)
-    # @staticmethod
-    # def value_car(self):
-    #     return self.car.day2 - self.car.day1
-    #     # value = CarsReservationHistory.day1.timedelta(days=0)
-    #     # value2 = CarsReservationHistory.day2(days=0)
-    #     # value3 = str(CarsReservationHistory.day1)
-    #     # total_value = value - value2
-    #     # return total_value
-    # def value_event(self):
-    #     self.day1 = datetime.timedelta(days=0)
-    #     self.day2 = datetime.timedelta(days=0)
-    #     value = self.day2 - self.day1
-    #     return value

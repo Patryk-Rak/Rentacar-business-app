@@ -5,6 +5,7 @@ import datetime #Create a Cars form
 
 
 class CarsForm(ModelForm):
+
     class Meta:
         model = Cars
         fields = "__all__" #można zaimportować całośc
@@ -22,7 +23,8 @@ class DateInput(forms.DateInput):
 
 
 class CarsReservationHistoryForm(forms.ModelForm):
-
+    # day1 = forms.DateTimeField(required=True)
+    # day2 = forms.DateTimeField(required=True)
     class Meta:
         model = CarsReservationHistory
         fields = ('car', 'day1', 'day2', )
@@ -37,11 +39,3 @@ class CarsReservationHistoryForm(forms.ModelForm):
         total_value = day2 - day1
         return total_value
 
-    def save(self, commit=True):
-        form_data = self.cleaned_data
-        self.instance.day1 = form_data['day1']
-        self.instance.day2 = form_data['day2']
-        self.instance.total_value = self.convert_date(
-                    form_data['day1'], form_data['day2'],
-                    )
-        return super(CarsReservationHistoryForm, self).save(commit)
