@@ -1,10 +1,10 @@
 from django.conf import settings  # TODO: ADD THIS LINE.
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
+
 from .forms import AccountRegistrationForm, AccountAuthenticationForm, AccountEditForm
 from .models import Account, ClientProfile
 
@@ -177,3 +177,72 @@ def edit_account_view(request, *args, **kwargs):
         context['form'] = form
     context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
     return render(request, "user_account/profile_edit.html", context)
+# def logout_view(request, *args, **kwargs):
+#     logout(request)
+#     return redirect("http://127.0.0.1:8000/")
+#
+# def login_view(request, *args, **kwargs):
+
+
+# class UserListView(ListView):
+#     template_name = "user_account/user_list.html"
+#     model = Account
+#     context_object_name = 'users'
+#     paginate_by = 5
+
+# def user_list(request):
+#     pg = Paginator(Account.objects.all().order_by('id'), 2)
+#     page_number = request.GET.get('page')
+#     try:
+#         users = pg.page(page_number)
+#     except EmptyPage:
+#         users = pg.page(pg.num_pages)
+#     except PageNotAnInteger:
+#         users = pg.page(1)
+#     return render(request, 'user_account/user_list.html', {'users': users})
+#
+# def delete_user_view(request, user_id):
+#     user = Account.objects.get(pk=user_id)
+#     user.delete()
+#     return redirect('name_user_list_view')
+
+# TODO: ADD THIS METHOD.
+
+def account_view(request, *args, **kwargs):
+    """
+    - Logic here is kind of tricky
+        is_self (boolean)
+            is_friend (boolean)
+                -1: NO_REQUEST_SENT
+                0: THEM_SENT_TO_YOU
+                1: YOU_SENT_TO_THEM
+    """
+    context = {}
+    user_id = kwargs.get("user_id")
+    try:
+        account = Account.objects.get(pk=user_id)
+    except:
+        return HttpResponse("Something went wrong.")
+    if account:
+        context['id'] = account.id
+        context['username'] = account.username
+        context['email'] = account.email
+        context['profile_image'] = account.profile_image.url
+        context['hide_email'] = account.hide_email
+
+        # Define template variables
+        is_self = True
+        is_friend = False
+        user = request.user
+        if user.is_authenticated and user != account:
+            is_self = False
+        elif not user.is_authenticated:
+            is_self = False
+
+        # Set the template variables to the values
+        context['is_self'] = is_self
+        context['is_friend'] = is_friend
+        context['BASE_URL'] = settings.BASE_URL
+        return render(request, "account/account.html", context)
+
+

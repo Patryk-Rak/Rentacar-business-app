@@ -1,7 +1,9 @@
 from django import forms
 from django.forms import ModelForm
+
 from .models import Cars, CarsReservationHistory
 import datetime #Create a Cars form
+
 
 
 class CarsForm(ModelForm):
@@ -22,6 +24,7 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 
+
 class CarsReservationHistoryForm(forms.ModelForm):
     # day1 = forms.DateTimeField(required=True)
     # day2 = forms.DateTimeField(required=True)
@@ -38,4 +41,5 @@ class CarsReservationHistoryForm(forms.ModelForm):
         day2 = datetime.datetime.combine(day2.date(),day2.time())
         total_value = day2 - day1
         return total_value
+
 

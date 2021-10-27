@@ -9,6 +9,8 @@ router = routers.DefaultRouter()
 router.register(r'student', CarsViewSet)
 router.register(r'cars', CarsReservationHistoryViewSet)
 
+app_name = 'main_app'
+
 urlpatterns = [
     path('', views.Car_list_view.as_view(), name="cars"),
     path('add_car/', views.add_car, name='add-car'),
@@ -17,11 +19,8 @@ urlpatterns = [
     path('cars/<cars_id>', views.get_reservation_view, name='car-reservation'),
     path('<cars_id>/x', views.update_view, name='car-update'),
     path('<int:id>/x', views.CarsDetailView.as_view(), name='cars_detail'),
-    path('test/', views.hello ),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-    # path('api2/', include(router.urls)),
-    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
 

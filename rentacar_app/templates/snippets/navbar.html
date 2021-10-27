@@ -1,6 +1,7 @@
 <nav class="navbar fixed-top py-3 navbar-expand-lg navbar-light bg-light shadow-sm">
      <div class="container-fluid" style="padding-right: 200px; padding-left:200px;">
-      <a class="navbar-brand" href="http://127.0.0.1:8000/">
+
+      <a class="navbar-brand" href="{% url 'home_app:home' %}">
          RENTACAR<img src="/static/images/logo.png" width="130" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,10 +11,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
          <li class="nav-item">
-           <a class="nav-link" aria-current="page" href="http://127.0.0.1:8000/">Strona Główna</a>
+           <a class="nav-link" aria-current="page" href="{% url 'home_app:home' %}">Strona Główna</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link active" href="http://127.0.0.1:8000/cars">Auta</a>
+           <a class="nav-link active" href="{% url 'main_app:cars' %}">Auta</a>
          </li>
          <li class="nav-item dropdown">
            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,11 +28,11 @@
            </ul>
          </li>
          <li class="nav-item">
-           <a class="nav-link" href="http://127.0.0.1:8000/user_contact/contact/">Kontakt</a>
+           <a class="nav-link" href="{% url 'contact:contact-view' %}">Kontakt</a>
          </li>
 
          <li class="nav-item" style="padding-top:7px; padding-bottom:7px;">
-            <form class="form-inline my-0 my-lg-0"  method="post" action="{% url 'search-car' %}">
+            <form class="form-inline my-0 my-lg-0"  method="post" action="{% url 'main_app:search-car' %}">
 			    {% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="car_search" style="width: 150px;">
             </form>
@@ -44,7 +45,6 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><span class="material-icons">login</span> Zaloguj</a>
             </li>
         {% endif %}
-             </div>
             </li>
         </ul>
       </div>
@@ -52,64 +52,3 @@
      </div>
 
 </nav>
-
-<!--<div style="margin:108px; opacity:0;"></div>-->
-
-
-
-<!--<div class="navbar navbar-inverse">-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col-lg-12">-->
-
-<!--                    <div class="navbar-header">-->
-<!--                        <button class="navbar-toggle" data-target="#mobile_menu" data-toggle="collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>-->
-<!--                        <a href="#" class="navbar-brand">GROUP.COM</a>-->
-<!--                    </div>-->
-
-<!--                    <div class="navbar-collapse collapse" id="mobile_menu">-->
-<!--                        <ul class="nav navbar-nav">-->
-<!--                            <li class="active"><a href="#">Home</a></li>-->
-<!--                            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <span class="caret"></span></a>-->
-<!--                                <ul class="dropdown-menu">-->
-<!--                                    <li><a href="#">About One</a></li>-->
-<!--                                    <li><a href="#">About Two</a></li>-->
-<!--                                    <li><a href="#">About Three</a></li>-->
-<!--                                    <li><a href="#">About Four</a></li>-->
-<!--                                    <li><a href="#">About Five</a></li>-->
-<!--                                    <li><a href="#">About Six</a></li>-->
-<!--                                </ul>-->
-<!--                            </li>-->
-<!--                            <li><a href="#">Welcome</a></li>-->
-<!--                            <li><a href="#">Services</a></li>-->
-<!--                            <li><a href="#">Gallery</a></li>-->
-<!--                            <li><a href="#">Contact Us</a></li>-->
-<!--                        </ul>-->
-<!--                        <ul class="nav navbar-nav">-->
-<!--                            <li>-->
-<!--                                <form action="" class="navbar-form">-->
-<!--                                    <div class="form-group">-->
-<!--                                        <div class="input-group">-->
-<!--                                            <input type="search" name="search" id="" placeholder="Search Anything Here..." class="form-control">-->
-<!--                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </form>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-
-<!--                        <ul class="nav navbar-nav navbar-right">-->
-<!--                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>-->
-<!--                            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span> Login / Sign Up <span class="caret"></span></a>-->
-<!--                                <ul class="dropdown-menu">-->
-<!--                                    <li><a href="#">Login</a></li>-->
-<!--                                    <li><a href="#">Sign Up</a></li>-->
-<!--                                </ul>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-

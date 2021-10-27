@@ -1,3 +1,6 @@
+
+
+
 .navbar-brand{
     font-weight: bold;
     font-family: 'Odibee Sans', cursive;
@@ -28,6 +31,14 @@
     background-color: white !important;
     opacity: 1; !important;
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -251,7 +262,6 @@
 
 
 
-<<<<<<< HEAD
 
 /* USER DETAILS PAGE STYLE
 -------------------------------------------------- */
@@ -259,7 +269,6 @@
 .form-control:focus {
     box-shadow: none;
     border-color: #bd1a20
-=======
 /*
 *
 * ==========================================
@@ -270,7 +279,6 @@
 .form-control:focus {
     box-shadow: none;
     border-color: #BA68C8
->>>>>>> 2eae9d13837563a1c21f8be00aa67902d465742a
 }
 
 .profile-button {
@@ -301,8 +309,7 @@
 .labels {
     font-size: 11px
 }
-<<<<<<< HEAD
-=======
+
 
 .add-experience:hover {
     background: #BA68C8;
@@ -310,4 +317,4 @@
     cursor: pointer;
     border: solid 1px #BA68C8
 }
->>>>>>> 2eae9d13837563a1c21f8be00aa67902d465742a
+

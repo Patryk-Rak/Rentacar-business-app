@@ -101,7 +101,7 @@
                     <h6 class="text-success">Dostępny</h6>
                     <div class="d-flex flex-column mt-4"><button class="btn btn-danger btn-sm" type="button">Czytaj więcej</button>
                         <button class="btn btn-outline-danger btn-sm mt-2" type="button">
-                        <a href="{% url 'car-reservation' car.id %}">Zarezerwuj</a>
+                        <a href="{% url 'main_app:car-reservation' car.id %}">Zarezerwuj</a>
                     </button>
                         {% if request.user.is_superuser or request.user.is_staff %}
                             <button class="btn btn-outline-danger btn-sm mt-2" type="button">

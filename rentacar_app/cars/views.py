@@ -66,6 +66,7 @@ def cars_list(request):
     return render(request, 'cars/cars.html', {'cars': cars})
 
 
+
 @staff_member_required
 def add_car(request):
     submitted = False
@@ -73,7 +74,7 @@ def add_car(request):
         form = CarsForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(redirect_to=reverse("add-car"))
+            return HttpResponseRedirect(redirect_to=reverse("main_app:add-car"))
     else:
         form = CarsForm
         if 'submitted' in request.GET:
@@ -102,6 +103,7 @@ def search_car(request):
         return render(request, "cars/search_car.html", {})
 
 
+
 @login_required(login_url="/user_account/login/")
 def get_reservation_view(request, cars_id, *args, **kwargs):
     car = Cars.objects.get(pk=cars_id)
@@ -125,6 +127,7 @@ def get_reservation_view(request, cars_id, *args, **kwargs):
 
 
 
+
 @staff_member_required
 def update_view(request, cars_id):
     car = Cars.objects.get(pk=cars_id)
@@ -137,24 +140,3 @@ def update_view(request, cars_id):
                    'form': form
                    })
 
-
-# @login_required(login_url="/user_account/login/")
-# def get_reservation_view(request, cars_id):
-#     car = Cars.objects.get(pk=cars_id)
-#     form = CarsReservationHistoryForm()
-#     if car.car_is_rented == False:
-#         form = CarsReservationHistoryForm(request.POST, request.FILES)
-#         # day1 = form.cleaned_data.get("day1")
-#         # day2 = form.cleaned_data.get["day2"]
-#         if form.is_valid():
-#             form.save()
-#             car.save()
-#             CarsReservationHistory.day1 = form.cleaned_data.get["day1"]
-#             CarsReservationHistory.day2 = form.cleaned_data.get["day2"]
-#         return render(request, 'cars/reservation.html', {form: 'form',
-#                                                          car: 'car'})
-#     else:
-#         return HttpResponse("Test")
-def hello(request, cars_id):
-    car = Cars.objects.get(pk=cars_id)
-    return HttpResponse(f'Hello !!!! Now is '[CarsReservationHistory.convert_date(self=get_reservation_confirmed_view(request))])
