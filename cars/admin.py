@@ -11,7 +11,7 @@ class Admin_cars_event(admin.ModelAdmin):
     list_filter = ('day_started', 'day_ended',)
 
 class Admin_cars_overview(admin.ModelAdmin):
-    list_display = ('model', 'color', 'air_conditioner', 'year_of_production', 'daily_rental_cost')
+    list_display = ('model', 'color', 'air_conditioner', 'year_of_production', 'daily_rental_cost', 'id')
     search_fields = ('model', 'category')
     ordering = ('daily_rental_cost',)
     list_filter = ('car_engine_power', 'type_of_car_engine',)

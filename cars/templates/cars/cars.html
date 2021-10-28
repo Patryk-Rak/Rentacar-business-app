@@ -105,7 +105,7 @@
                     </button>
                         {% if request.user.is_superuser or request.user.is_staff %}
                             <button class="btn btn-outline-danger btn-sm mt-2" type="button">
-                            <a href="{% url 'car-update' car.id %}">Edytuj</a>
+                            <a href="{% url 'main_app:car-update' car.id %}">Edytuj</a>
                         {% endif %}
                     </button>
                     </div>
