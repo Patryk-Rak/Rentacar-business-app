@@ -120,9 +120,9 @@ def get_reservation_view(request, cars_id, *args, **kwargs):
             day1 = form.cleaned_data.get("day1")
             day2 = form.cleaned_data.get("day2")
             form.save(commit=True)
-            return redirect('cars')
+            return redirect('main_app:cars')
     return render(request, "cars/reservation.html", {'car': car,
-                                                         'form': form})
+                                                    'form': form})
 
 
 
