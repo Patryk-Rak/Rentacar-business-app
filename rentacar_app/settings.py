@@ -30,9 +30,8 @@ SECRET_KEY = "chomik"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['heroku-car-rental-app-smp.herokuapp.com',
-                 '127.0.0.1']
-#ALLOWED_HOSTS = ["rentacar_app.herokuapp.com"]
+ALLOWED_HOSTS = ['rentacar-heroku.herokuapp.com']
+
 
 
 # Application definition
