@@ -92,11 +92,11 @@ WSGI_APPLICATION = 'rentacar_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'rental_car_app_database',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': config("DATABASE_NAME"),
+        'USER': config("DATABASE_USER"),
+        'PASSWORD': config("DATABASE_PASSWORD"),
+        'HOST': config("DATABASE_HOST"),
+        'PORT': config("DATABASE_PORT"),
     }
 }
 
@@ -185,7 +185,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 # EMAIL_BACKEND = config("EMAIL_BACKEND")
 # SENDGRID_API_KEY = config("SENDGRID_API_KEY")
-#
 # DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
 
