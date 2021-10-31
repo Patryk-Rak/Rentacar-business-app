@@ -69,7 +69,7 @@
     <form action="" method="get">
       <div class="form-row">
         <div class="col">
-          <input type="submit" value="Szukaj"  class="form-control" {{ filterset.form }} />
+          <input type="submit" value="Szukaj"  class="form-control" {{ filterset.form }}
         </div>
       </div>
     </form>
@@ -83,13 +83,13 @@
             <div class="row p-2 bg-white border rounded">
                 <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="https://i.pinimg.com/originals/ab/17/0f/ab170fc62f73593201c06d9601ef1b13.jpg"></div>
                 <div class="col-md-6 mt-1">
-                    <h5>{{ car.model }}</h5>
+                    <h5>{{ car.mark }} {{ car.model }}</h5>
                     <div class="d-flex flex-row">
                         <span>{{ car.id }}</span>
                     </div>
                     <div class="mt-1 mb-1 spec-1"><span>Moc Silnika: {{car.car_engine_power}} KM </span><span class="dot"></span>
                   <span>Rok: {{car.year_of_production}} </span><span class="dot"></span><span>Typ Silnika: {{car.type_of_car_engine}} </span><span class="dot"></span><br>
-                  <span>Liczba osób: {{car.num_of_passengers}}</span><span class="dot"></span><span>klimatyzacja: {{car.air_conditioner}}<br></span><span>Miejsce: {{car.facility_allocation}}</span><br/>
+                  <span>Liczba osób: {{car.num_of_passengers}}</span><span class="dot"></span><span> klimatyzacja: {{car.air_conditioner}}<br></span><span>Miejsce: {{car.facility_allocation}}</span><br/>
                </div>
                     <p class="text-justify text-truncate para mb-0">{{ car.note }}<br><br></p>
                 </div>
@@ -98,7 +98,7 @@
                         <h4 class="mr-1">{{ car.daily_rental_cost }}</h4>
                   <span class="strike-text">$200.99</span>
                     </div>
-                    <h6 class="text-success">Dostępny</h6>
+                    <h6 class="text-success">{{ car.car_is_rented }} </h6>
                     <div class="d-flex flex-column mt-4"><button class="btn btn-danger btn-sm" type="button">Czytaj więcej</button>
                         <button class="btn btn-outline-danger btn-sm mt-2" type="button">
                         <a href="{% url 'main_app:car-reservation' car.id %}">Zarezerwuj</a>
