@@ -134,7 +134,7 @@ def update_view(request, cars_id):
     form = CarsForm(request.POST or None, instance=car)
     if form.is_valid():
         form.save()
-        return redirect('cars')
+        return redirect('main_app:cars')
     return render(request, 'cars/cars_info_update.html',
                   {'car': car,
                    'form': form
