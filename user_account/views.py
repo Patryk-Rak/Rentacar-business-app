@@ -34,7 +34,7 @@ def register_view(request, *args, **kwargs):
             destination = get_redirect_if_exists(request)
             if destination:
                 return redirect(destination)
-            return redirect("http://127.0.0.1:8000/")
+            return redirect("home_app:home")
         else:
             context['registration_form'] = account_form
 

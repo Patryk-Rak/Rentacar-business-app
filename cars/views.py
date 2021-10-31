@@ -122,7 +122,7 @@ def get_reservation_view(request, cars_id, *args, **kwargs):
             form.save(commit=True)
             return redirect('main_app:cars')
     return render(request, "cars/reservation.html", {'car': car,
-                                                         'form': form})
+                                                    'form': form})
 
 
 
