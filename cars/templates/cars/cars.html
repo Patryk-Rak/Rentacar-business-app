@@ -64,17 +64,15 @@
     </button>
   </div>
 
-
 <center>
     <form action="" method="get">
       <div class="form-row">
         <div class="col">
-          <input type="submit" value="Szukaj"  class="form-control" {{ filterset.form }}
+          <input type="submit" value="Szukaj"  class="form-control"> {{ filterset.form }}
         </div>
       </div>
     </form>
 </center>
-
 
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center row">
@@ -99,7 +97,10 @@
                   <span class="strike-text">$200.99</span>
                     </div>
                     <h6 class="text-success">{{ car.car_is_rented }} </h6>
-                    <div class="d-flex flex-column mt-4"><button class="btn btn-danger btn-sm" type="button">Czytaj więcej</button>
+                    <div class="d-flex flex-column mt-4">
+                        <button class="btn btn-danger btn-sm" type="button">
+                        <a href="{% url 'main_app:cars_detail' car.id %}">Czytaj więcej</a>
+                    </button>
                         <button class="btn btn-outline-danger btn-sm mt-2" type="button">
                         <a href="{% url 'main_app:car-reservation' car.id %}">Zarezerwuj</a>
                     </button>

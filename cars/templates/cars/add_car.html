@@ -8,13 +8,10 @@
             Dodałeś samochód do bazy danych
         {% else %}
         <form action=" " method="POST">
-
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Submit" class="btn btn-sucess">
-
         </form>
         {% endif %}
-
     </center>
 {% endblock %}

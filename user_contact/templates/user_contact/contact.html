@@ -1,17 +1,13 @@
 {% extends "base.html" %}
-
 {% block content %}
-
 <div class="container">
 <center>
   <h1>Formularz kontaktowy</h1>
     <form action="" method="post">
         {% csrf_token %}
-
         {% for hidden in form.hidden_fields %}
             {{ hidden }}
         {% endfor %}
-
         {% for field in form.visible_fields %}
         <div class="form-group">
             {{ fields.errors }}
@@ -20,10 +16,8 @@
             {{ field }}
         </div>
         {% endfor %}
-
         <button type="reset" class="btn btn-secondary"> Reset </button>
         <button type="submit" class="btn btn-primary"> Submit </button>
-
     </form>
 </center>
 </div>

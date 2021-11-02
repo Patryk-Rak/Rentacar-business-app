@@ -34,11 +34,10 @@ class ClientProfileAdmin(UserAdmin):
 
     filter_horizontal = ()
     list_filter = ()
-
-
     fieldsets = (
         (None, {'fields': ('user',)}),
-        ('Personal info', {'fields': ('phone_number', 'address1', 'address2', 'postcode', 'state', 'country', 'state_region')}),
+        ('Personal info', {'fields': ('phone_number', 'address1', 'address2', 'postcode', 'state', 'country',
+                                      'state_region')}),
         )
     add_fieldsets = (
         (None, {
@@ -49,11 +48,5 @@ class ClientProfileAdmin(UserAdmin):
     )
 
 
-
 admin.site.register(Account, AccountAdmin)
 admin.site.register(ClientProfile, ClientProfileAdmin)
-
-
-
-
-

@@ -1,6 +1,4 @@
-from django.conf import settings  # TODO: ADD THIS LINE.
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic.list import ListView
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
@@ -34,7 +32,7 @@ def register_view(request, *args, **kwargs):
             destination = get_redirect_if_exists(request)
             if destination:
                 return redirect(destination)
-            return redirect("home_app:home")
+            return redirect("main_app:cars")
         else:
             context['registration_form'] = account_form
 
@@ -43,7 +41,7 @@ def register_view(request, *args, **kwargs):
 
 def logout_view(request, *args, **kwargs):
     logout(request)
-    return redirect("http://127.0.0.1:8000/")
+    return redirect("main_app:cars")
 
 
 def login_view(request, *args, **kwargs):
@@ -51,7 +49,7 @@ def login_view(request, *args, **kwargs):
 
     user = request.user
     if user.is_authenticated:
-        return redirect("http://127.0.0.1:8000/")
+        return redirect("main_app:cars")
 
     destination = get_redirect_if_exists(request)
     if request.POST:
@@ -65,31 +63,9 @@ def login_view(request, *args, **kwargs):
                 destination = get_redirect_if_exists(request)
                 if destination:
                     return redirect(destination)
-                return redirect("http://127.0.0.1:8000/")
+                return redirect("main_app:cars")
     return render(request, "user_account/login.html", context)
 
-
-# class UserListView(ListView):
-#     template_name = "user_account/user_list.html"
-#     model = Account
-#     context_object_name = 'users'
-#     paginate_by = 5
-
-# def user_list(request):
-#     pg = Paginator(Account.objects.all().order_by('id'), 2)
-#     page_number = request.GET.get('page')
-#     try:
-#         users = pg.page(page_number)
-#     except EmptyPage:
-#         users = pg.page(pg.num_pages)
-#     except PageNotAnInteger:
-#         users = pg.page(1)
-#     return render(request, 'user_account/user_list.html', {'users': users})
-#
-# def delete_user_view(request, user_id):
-#     user = Account.objects.get(pk=user_id)
-#     user.delete()
-#     return redirect('name_user_list_view')
 
 def account_view(request, *args, **kwargs):
     """
@@ -155,14 +131,14 @@ def edit_account_view(request, *args, **kwargs):
             return redirect("account:view", user_id=account.pk)
         else:
             form = AccountEditForm(request.POST, instance=request.user,
-                                     initial={
-                                         "id": account.pk,
-                                         "email": account.email,
-                                         "first_name": account.first_name,
-                                         "last_name": account.last_name,
-                                         "hide_email": account.hide_email,
-                                     }
-                                     )
+                                   initial={
+                                       "id": account.pk,
+                                       "email": account.email,
+                                       "first_name": account.first_name,
+                                       "last_name": account.last_name,
+                                       "hide_email": account.hide_email,
+                                   }
+                                   )
             context['form'] = form
     else:
         form = AccountEditForm(
@@ -178,5 +154,26 @@ def edit_account_view(request, *args, **kwargs):
     context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
     return render(request, "user_account/profile_edit.html", context)
 
+# !!! Functional but not used !!!
 
+# class UserListView(ListView):
+#     template_name = "user_account/user_list.html"
+#     model = Account
+#     context_object_name = 'users'
+#     paginate_by = 5
 
+# def user_list(request):
+#     pg = Paginator(Account.objects.all().order_by('id'), 2)
+#     page_number = request.GET.get('page')
+#     try:
+#         users = pg.page(page_number)
+#     except EmptyPage:
+#         users = pg.page(pg.num_pages)
+#     except PageNotAnInteger:
+#         users = pg.page(1)
+#     return render(request, 'user_account/user_list.html', {'users': users})
+#
+# def delete_user_view(request, user_id):
+#     user = Account.objects.get(pk=user_id)
+#     user.delete()
+#     return redirect('name_user_list_view')

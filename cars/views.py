@@ -5,19 +5,15 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from rest_framework import viewsets
 from django.views.generic import \
     (DetailView,
      ListView)
-from django.core import serializers
+
 from .filters import CarFilter
 from .forms import CarsForm, CarsReservationHistoryForm
 from .models import Cars, CarsReservationHistory
-import io
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import viewsets
 from .serializer import CarsSerializer, CarsReservationHistorySerializer
-# Create your views here.
 
 
 class CarsViewSet(viewsets.ModelViewSet):
@@ -36,7 +32,7 @@ def car_filter(request):
     return render(request, 'cars/car_filter.html', {'filter': car_filter})
 
 
-class Car_list_view(ListView):
+class CarListView(ListView):
     template_name = "cars/cars.html"
     model = Cars
     context_object_name = 'cars'
@@ -66,7 +62,6 @@ def cars_list(request):
     return render(request, 'cars/cars.html', {'cars': cars})
 
 
-
 @staff_member_required
 def add_car(request):
     submitted = False
@@ -79,14 +74,11 @@ def add_car(request):
         form = CarsForm
         if 'submitted' in request.GET:
             submitted = True
-
     return render(request, "cars/add_car.html", {'form': form, 'submitted': submitted})
 
 
 class CarsDetailView(DetailView):
     template_name = "cars/cars_detail.html"
-
-    # queryset = Cars.objects.all()
 
     def get_object(self):
         id_ = self.kwargs.get("id")
@@ -96,22 +88,17 @@ class CarsDetailView(DetailView):
 def search_car(request):
     if request.method == "POST":
         search = request.POST.get('car_search')
-        # cars = Cars.objects.filter(mark=search)
         cars = Cars.objects.filter(Q(mark=search) | Q(model=search))
         return render(request, "cars/search_car.html", {'query': search, 'query_base': cars})
     else:
         return render(request, "cars/search_car.html", {})
 
 
-
 @login_required(login_url="/user_account/login/")
 def get_reservation_view(request, cars_id, *args, **kwargs):
     car = Cars.objects.get(pk=cars_id)
-    if car.car_is_rented == True:
-
+    if car.car_is_rented:
         return HttpResponse("Auto jest wypozyczone")
-        # context = {}# car.car_is_rented = 'Zarezerwowany'
-        # form = CarsReservationHistoryForm()
     form = CarsReservationHistoryForm()
     if request.POST:
         form = CarsReservationHistoryForm(request.POST)
@@ -121,11 +108,7 @@ def get_reservation_view(request, cars_id, *args, **kwargs):
             day2 = form.cleaned_data.get("day2")
             form.save(commit=True)
             return redirect('main_app:cars')
-    return render(request, "cars/reservation.html", {'car': car,
-                                                    'form': form})
-
-
-
+    return render(request, "cars/reservation.html", {'car': car, 'form': form})
 
 
 @staff_member_required
@@ -135,8 +118,4 @@ def update_view(request, cars_id):
     if form.is_valid():
         form.save()
         return redirect('main_app:cars')
-    return render(request, 'cars/cars_info_update.html',
-                  {'car': car,
-                   'form': form
-                   })
-
+    return render(request, 'cars/cars_info_update.html', {'car': car, 'form': form})

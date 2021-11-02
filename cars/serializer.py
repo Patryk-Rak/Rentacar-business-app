@@ -12,7 +12,3 @@ class CarsReservationHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CarsReservationHistory
         fields = ['day1', 'day2', 'convert_date']
-
-
-
-
