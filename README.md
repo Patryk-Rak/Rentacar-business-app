@@ -1,11 +1,12 @@
-# Rentacar Business App
-## Service that helps you find suitable car in your location
-
-[![N|Solid](https://seeklogo.com/images/G/github-logo-5F384D0265-seeklogo.com.png)](https://nodesource.com/products/nsolid)
-
 <p align="center">
   <img width="200" src="https://i.imgur.com/0cYM5m3.png" href="">
 </p>
+
+# Rentacar Business App
+## Service that helps you find suitable car in your location
+
+
+
 
 Rentacar is an open-source web-app that simulates online service where people
 can find suitable car and rent it for a specified period of time.
@@ -13,8 +14,7 @@ Website works with database that holds all informations about
 offered products and also registered clients together with people
 that works for the company. 
 
-Mobile-ready, Django-powered, bootstrap 5.1.1 included.
-
+Mobile-ready, Django-powered, bootstrap 5.1.1 included. Website was initially written in polish, gradually being translated into english language.
 ## Features
 
 - Create an account as a client directly from website
@@ -36,31 +36,29 @@ and way to learn right flow when adding new features.
 
 ## Preview
 
-####Service that helps you find suitable car in your location
-
 ![Frontpage](https://i.imgur.com/PenYUBA.png)
-This is homepage on the website that contains navbar that navigates to common features
+This is homepage on the website that contains navbar that navigates to common features.
 
 ![Frontpage](https://i.imgur.com/4rr9g42.png)
-This page u can choice our car to rent
+Product page with listed items and functional filtering option.
 
 ![Frontpage](https://i.imgur.com/UmFF7Ut.png)
-When u choice date to reservation you can check the total cost of your reservation
+Raw page (for now) with confirmation of the transaction.
 
 ![Frontpage](https://i.imgur.com/HyaudnQ.png)
-Client-side feature
+Client-side features with profile edit option and history of transactions.
 
 ## Tech
 
 Rentacar uses a number of open source or free for use projects to work properly:
 
-- [Python] - HTML enhanced for web apps!
-- [Django] - HTML enhanced for web apps!
-- [Django filters] - HTML enhanced for web apps!
-- [Postgres] - awesome web-based text editor
-- [Bootstrap] - Markdown parser done right. Fast and easy to extend.
-- [Sendgrid] - great UI boilerplate for modern web apps
-- [Heroku for Django] - evented I/O for the backend
+- [Python] - 3.9.2 version
+- [Django] - 3.2.3 version
+- [Django filters] - 2.4.0 version
+- [Postgres] - 14.0 version
+- [Bootstrap] - 5.1.1 version, installed in static files
+- [Sendgrid] - 6.7.1 version, API for email feature, needs account to operate
+- [Heroku for Django] - 0.3.1 version
 
 
 ## Installation
@@ -109,7 +107,7 @@ If you want use send mail feature you have crate account on [SendGrid] and follo
 
 ## License
 
-**Open Source Software and three musketeers**
+**Open Source Software**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
