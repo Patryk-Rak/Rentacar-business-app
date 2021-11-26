@@ -6,17 +6,16 @@ from .models import Cars, CarsReservationHistory
 
 
 class CarsForm(ModelForm):
-
     class Meta:
         model = Cars
         fields = "__all__"
 
         widgets = {
-            'mark' : forms.TextInput(attrs={'class':'form-control'}),
-            'model' : forms.TextInput(attrs={'class':'form-control'}),
-            'color' : forms.TextInput(attrs={'class':'form-control'}),
-            'note' : forms.TextInput(attrs={'class':'form-control'}),
-            }
+            'mark': forms.TextInput(attrs={'class': 'form-control'}),
+            'model': forms.TextInput(attrs={'class': 'form-control'}),
+            'color': forms.TextInput(attrs={'class': 'form-control'}),
+            'note': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class DateInput(forms.DateInput):
@@ -26,7 +25,7 @@ class DateInput(forms.DateInput):
 class CarsReservationHistoryForm(forms.ModelForm):
     class Meta:
         model = CarsReservationHistory
-        fields = ('car', 'day1', 'day2', )
+        fields = ('car', 'day1', 'day2',)
         widgets = {
             'day1': DateInput(),
             'day2': DateInput(),
